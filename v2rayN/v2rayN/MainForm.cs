@@ -338,7 +338,7 @@ namespace v2rayN
 
         private void menuUpdate_Click(object sender, EventArgs e)
         {
-            string url = @"https://github.com/qingyede/v2rayN/releases";
+            string url = @"https://github.com/v2ray/v2rayN/releases";
             System.Diagnostics.Process.Start(url);
         }
 
