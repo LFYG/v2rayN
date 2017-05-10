@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -16,11 +17,9 @@ namespace v2rayN
         {
             AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
 
-            bool runone;
-            System.Threading.Mutex run = new System.Threading.Mutex(true, "v2rayN", out runone);
-            if (runone)
+            Process instance = RunningInstance();
+            if (instance == null)
             {
-                run.ReleaseMutex();
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 Application.Run(new MainForm());
@@ -44,5 +43,24 @@ namespace v2rayN
             }
         }
 
+        /// <summary> 
+        /// 获取正在运行的实例，没有运行的实例返回null; 
+        /// </summary> 
+        public static Process RunningInstance()
+        {
+            Process current = Process.GetCurrentProcess();
+            Process[] processes = Process.GetProcessesByName(current.ProcessName);
+            foreach (Process process in processes)
+            {
+                if (process.Id != current.Id)
+                {
+                    if (Assembly.GetExecutingAssembly().Location.Replace("/", "\\") == process.MainModule.FileName)
+                    {
+                        return process;
+                    }
+                }
+            }
+            return null;
+        }
     }
 }
