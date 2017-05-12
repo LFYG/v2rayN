@@ -29,6 +29,10 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.cmbNetwork = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.cmbSecurity = new System.Windows.Forms.ComboBox();
             this.txtRemarks = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -43,11 +47,18 @@
             this.label1 = new System.Windows.Forms.Label();
             this.btnClose = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.groupBox1.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label9);
+            this.groupBox1.Controls.Add(this.label8);
+            this.groupBox1.Controls.Add(this.cmbNetwork);
+            this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.cmbSecurity);
             this.groupBox1.Controls.Add(this.txtRemarks);
             this.groupBox1.Controls.Add(this.label6);
@@ -60,13 +71,53 @@
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.txtAddress);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.groupBox1.Location = new System.Drawing.Point(0, 0);
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox1.Location = new System.Drawing.Point(0, 10);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(447, 210);
+            this.groupBox1.Size = new System.Drawing.Size(447, 239);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "服务器";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(285, 165);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(143, 12);
+            this.label9.TabIndex = 15;
+            this.label9.Text = "*默认tcp,选错会无法连接";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(285, 142);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(155, 12);
+            this.label8.TabIndex = 14;
+            this.label8.Text = "*随便选,建议(aes-128-cfb)";
+            // 
+            // cmbNetwork
+            // 
+            this.cmbNetwork.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbNetwork.FormattingEnabled = true;
+            this.cmbNetwork.Items.AddRange(new object[] {
+            "tcp",
+            "kcp",
+            "ws"});
+            this.cmbNetwork.Location = new System.Drawing.Point(127, 165);
+            this.cmbNetwork.Name = "cmbNetwork";
+            this.cmbNetwork.Size = new System.Drawing.Size(143, 20);
+            this.cmbNetwork.TabIndex = 12;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(12, 169);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(107, 12);
+            this.label7.TabIndex = 13;
+            this.label7.Text = "传输协议(network)";
             // 
             // cmbSecurity
             // 
@@ -84,7 +135,7 @@
             // 
             // txtRemarks
             // 
-            this.txtRemarks.Location = new System.Drawing.Point(127, 165);
+            this.txtRemarks.Location = new System.Drawing.Point(127, 194);
             this.txtRemarks.Name = "txtRemarks";
             this.txtRemarks.Size = new System.Drawing.Size(300, 21);
             this.txtRemarks.TabIndex = 11;
@@ -92,7 +143,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(12, 169);
+            this.label6.Location = new System.Drawing.Point(12, 198);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(83, 12);
             this.label6.TabIndex = 10;
@@ -174,7 +225,7 @@
             // btnClose
             // 
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnClose.Location = new System.Drawing.Point(352, 231);
+            this.btnClose.Location = new System.Drawing.Point(329, 17);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
             this.btnClose.TabIndex = 4;
@@ -184,7 +235,7 @@
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(259, 231);
+            this.btnOK.Location = new System.Drawing.Point(236, 17);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 5;
@@ -192,21 +243,40 @@
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
+            // panel1
+            // 
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(447, 10);
+            this.panel1.TabIndex = 6;
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.btnClose);
+            this.panel2.Controls.Add(this.btnOK);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel2.Location = new System.Drawing.Point(0, 249);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(447, 60);
+            this.panel2.TabIndex = 7;
+            // 
             // AddServerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnClose;
-            this.ClientSize = new System.Drawing.Size(447, 279);
-            this.Controls.Add(this.btnClose);
-            this.Controls.Add(this.btnOK);
+            this.ClientSize = new System.Drawing.Size(447, 309);
             this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "AddServerForm";
             this.Text = "编辑或添加服务器";
             this.Load += new System.EventHandler(this.AddServerForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.panel2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -228,5 +298,11 @@
         private System.Windows.Forms.TextBox txtAddress;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cmbSecurity;
+        private System.Windows.Forms.ComboBox cmbNetwork;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel panel2;
     }
 }

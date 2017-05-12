@@ -70,13 +70,13 @@ namespace v2rayN
             lvServers.MultiSelect = false;
             lvServers.HeaderStyle = ColumnHeaderStyle.Nonclickable;
 
-
             lvServers.Columns.Add("默认", 40, HorizontalAlignment.Center);
-            lvServers.Columns.Add("地址(address)", 120, HorizontalAlignment.Left);
+            lvServers.Columns.Add("地址(address)", 110, HorizontalAlignment.Left);
             lvServers.Columns.Add("端口(port)", 80, HorizontalAlignment.Left);
-            lvServers.Columns.Add("用户ID(id)", 120, HorizontalAlignment.Left);
-            lvServers.Columns.Add("额外ID(alterId)", 120, HorizontalAlignment.Left);
+            lvServers.Columns.Add("用户ID(id)", 110, HorizontalAlignment.Left);
+            lvServers.Columns.Add("额外ID(alterId)", 110, HorizontalAlignment.Left);
             lvServers.Columns.Add("加密方式(security)", 120, HorizontalAlignment.Left);
+            lvServers.Columns.Add("传输协议(network)", 120, HorizontalAlignment.Left);
             lvServers.Columns.Add("备注(remarks)", 150, HorizontalAlignment.Left);
         }
 
@@ -98,12 +98,13 @@ namespace v2rayN
                 VmessItem item = config.vmess[k];
                 ListViewItem lvItem = new ListViewItem(new string[] {  
                                                 def,
-                                                item.address ,
-                                                item.port.ToString()   ,
-                                                item.id ,
-                                                item.alterId.ToString()   ,
-                                                item.security ,
-                                                item.remarks });
+                                                item.address,
+                                                item.port.ToString(),
+                                                item.id,
+                                                item.alterId.ToString(),
+                                                item.security,
+                                                item.network,
+                                                item.remarks});
                 lvServers.Items.Add(lvItem);
             }
         }
@@ -237,11 +238,15 @@ namespace v2rayN
             LoadV2ray();
         }
 
-
         private void btnClose_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;
             //this.Close();
+        }
+
+        private void lvServers_DoubleClick(object sender, EventArgs e)
+        {
+            btnEditServer_Click(null, null);
         }
         #endregion
 
@@ -306,7 +311,7 @@ namespace v2rayN
         /// <param name="msg"></param>
         private void notifyMsg(string msg)
         {
-            notifyIcon1.Text = msg;
+            notifyMain.Text = msg;
         }
 
         #endregion
@@ -314,7 +319,7 @@ namespace v2rayN
 
         #region 托盘事件
 
-        private void notifyIcon1_MouseClick(object sender, MouseEventArgs e)
+        private void notifyMain_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == System.Windows.Forms.MouseButtons.Left)
             {
@@ -354,12 +359,9 @@ namespace v2rayN
         {
             this.WindowState = FormWindowState.Minimized;
             this.Hide();
-            this.notifyIcon1.Visible = true;
+            this.notifyMain.Visible = true;
         }
 
         #endregion
-
-
-
     }
 }

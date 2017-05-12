@@ -43,36 +43,81 @@ namespace v2rayN.Mode
         /// </summary>
         public bool reloadV2ray { get; set; }
 
+        /// <summary>
+        /// 路由=>绕过大陆网址
+        /// </summary>
+        public bool chinasites { get; set; }
+
+        /// <summary>
+        /// 路由=>绕过大陆ip
+        /// </summary>
+        public bool chinaip { get; set; }
+
+        #region 函数
+
         public string address()
         {
+            if (index < 0)
+            {
+                return string.Empty;
+            }
             return vmess[index].address;
         }
 
         public int port()
         {
+            if (index < 0)
+            {
+                return 1080;
+            }
             return vmess[index].port;
         }
 
         public string id()
         {
+            if (index < 0)
+            {
+                return string.Empty;
+            }
             return vmess[index].id;
         }
 
         public int alterId()
         {
+            if (index < 0)
+            {
+                return 0;
+            }
             return vmess[index].alterId;
         }
 
         public string security()
         {
+            if (index < 0)
+            {
+                return string.Empty;
+            }
             return vmess[index].security;
         }
 
         public string remarks()
         {
+            if (index < 0)
+            {
+                return string.Empty;
+            }
             return vmess[index].remarks;
         }
+        public string network()
+        {
+            if (index < 0 || string.IsNullOrEmpty(vmess[index].network))
+            {
+                return "tcp";
+            }
+            return vmess[index].network;
+        }
 
+        #endregion
     }
 
     public class VmessItem
@@ -97,6 +142,10 @@ namespace v2rayN.Mode
         /// 
         /// </summary>
         public string security { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string network { get; set; }
         /// <summary>
         /// 
         /// </summary>

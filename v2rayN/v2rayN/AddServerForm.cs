@@ -25,6 +25,7 @@ namespace v2rayN
                 txtId.Text = vmessItem.id;
                 txtAlterId.Text = vmessItem.alterId.ToString();
                 cmbSecurity.Text = vmessItem.security;
+                cmbNetwork.Text = vmessItem.network;
                 txtRemarks.Text = vmessItem.remarks;
             }
             else
@@ -34,6 +35,7 @@ namespace v2rayN
                 txtId.Text = "";
                 txtAlterId.Text = "0";
                 cmbSecurity.Text = "none";
+                cmbNetwork.Text = "tcp";
                 txtRemarks.Text = "";
             }
         }
@@ -45,6 +47,7 @@ namespace v2rayN
             string id = txtId.Text;
             string alterId = txtAlterId.Text;
             string security = cmbSecurity.Text;
+            string network = cmbNetwork.Text;
             string remarks = txtRemarks.Text;
 
             if (string.IsNullOrEmpty(address))
@@ -74,6 +77,7 @@ namespace v2rayN
             vmessItem.id = id;
             vmessItem.alterId = Convert.ToInt32(alterId);
             vmessItem.security = security;
+            vmessItem.network = network;
             vmessItem.remarks = remarks;
 
             if (ConfigHandler.AddServer(ref config, vmessItem, EditIndex) == 0)

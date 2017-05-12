@@ -13,18 +13,28 @@ namespace v2rayN
 
         private void OptionSettingForm_Load(object sender, EventArgs e)
         {
+            //基础
             txtlocalPort.Text = config.localPort.ToString();
             chkudpEnabled.Checked = config.udpEnabled;
             chklogEnabled.Checked = config.logEnabled;
             cmbloglevel.Text = config.loglevel;
+
+            //路由
+            chkBypassChinasites.Checked = config.chinasites;
+            chkBypassChinaip.Checked = config.chinaip;
         }
 
         private void btnOK_Click(object sender, EventArgs e)
         {
+            //基础
             string localPort = txtlocalPort.Text;
             bool udpEnabled = chkudpEnabled.Checked;
             bool logEnabled = chklogEnabled.Checked;
             string loglevel = cmbloglevel.Text;
+
+            //路由
+            bool bypassChinasites = chkBypassChinasites.Checked;
+            bool bypassChinaip = chkBypassChinaip.Checked;
 
             if (string.IsNullOrEmpty(localPort) || !Utils.IsNumberic(localPort))
             {
@@ -32,10 +42,15 @@ namespace v2rayN
                 return;
             }
 
+            //基础
             config.localPort = Convert.ToInt32(localPort);
             config.udpEnabled = udpEnabled;
             config.logEnabled = logEnabled;
             config.loglevel = loglevel;
+
+            //路由
+            config.chinasites = bypassChinasites;
+            config.chinaip = bypassChinaip;
 
             if (ConfigHandler.SaveConfig(ref config) == 0)
             {

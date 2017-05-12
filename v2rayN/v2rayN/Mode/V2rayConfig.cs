@@ -147,6 +147,10 @@ namespace v2rayN.Mode
         /// <summary>
         /// 
         /// </summary>
+        public StreamSettings streamSettings { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
         public Mux mux { get; set; }
     }
 
@@ -221,5 +225,13 @@ namespace v2rayN.Mode
         /// 
         /// </summary>
         public Routingsettings settings { get; set; }
+    }
+
+    public class StreamSettings
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        public string network { get; set; }
     }
 }

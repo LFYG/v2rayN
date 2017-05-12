@@ -27,11 +27,15 @@ namespace v2rayN.Handler
             if (config == null)
             {
                 config = new Config();
-                config.localPort = 1088;
+                config.localPort = 1080;
                 config.index = -1;
                 config.logEnabled = false;
-                config.loglevel = "";
+                config.loglevel = "warning";
                 config.vmess = new List<VmessItem>();
+
+                //路由
+                config.chinasites = false;
+                config.chinaip = false;
             }
 
             if (config == null
@@ -145,6 +149,7 @@ namespace v2rayN.Handler
             vmessItem.id = config.vmess[index].id;
             vmessItem.alterId = config.vmess[index].alterId;
             vmessItem.security = config.vmess[index].security;
+            vmessItem.network = config.vmess[index].network;
             vmessItem.remarks = string.Format("{0}-副本", config.vmess[index].remarks);
             config.vmess.Add(vmessItem);
 
