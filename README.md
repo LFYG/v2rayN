@@ -3,7 +3,7 @@
 ------------
 
 ## 使用说明
-- 从releases 下载下载exe（暂时只提供x86)
+- 从releases 下载下载exe
 - 同时下载v2ray core放在相同文件夹下面
 - 运行v2rayN.exe
 
