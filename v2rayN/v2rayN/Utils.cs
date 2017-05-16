@@ -29,14 +29,14 @@ namespace v2rayN
             }
             return result;
         }
- 
+
 
         /// <summary>
         /// 取得Config
         /// </summary>
         /// <returns></returns>
         public static string LoadResource(string res)
-        {          
+        {
             string result = string.Empty;
 
             try
@@ -67,7 +67,7 @@ namespace v2rayN
             }
             catch
             {
-                return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(null);
+                return Newtonsoft.Json.JsonConvert.DeserializeObject<T>("");
             }
         }
 
@@ -112,6 +112,24 @@ namespace v2rayN
             {
                 return false;
             }
+        }
+
+        /// <summary>
+        /// 文本
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        public static bool IsNullOrEmpty(string text)
+        {
+            if (string.IsNullOrEmpty(text))
+            {
+                return true;
+            }
+            if (text.Equals("null"))
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

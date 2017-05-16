@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.btnClose = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
@@ -45,16 +46,29 @@
             this.label2 = new System.Windows.Forms.Label();
             this.txtAddress = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.btnClose = new System.Windows.Forms.Button();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.btnOK = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
+            this.btnImport = new System.Windows.Forms.Button();
+            this.chktcpSettings = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
+            // btnClose
+            // 
+            this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnClose.Location = new System.Drawing.Point(329, 17);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(75, 23);
+            this.btnClose.TabIndex = 4;
+            this.btnClose.Text = "取消(&C)";
+            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.chktcpSettings);
             this.groupBox1.Controls.Add(this.label9);
             this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.Controls.Add(this.cmbNetwork);
@@ -74,7 +88,7 @@
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(0, 10);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(447, 239);
+            this.groupBox1.Size = new System.Drawing.Size(447, 247);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "服务器";
@@ -135,7 +149,7 @@
             // 
             // txtRemarks
             // 
-            this.txtRemarks.Location = new System.Drawing.Point(127, 194);
+            this.txtRemarks.Location = new System.Drawing.Point(127, 216);
             this.txtRemarks.Name = "txtRemarks";
             this.txtRemarks.Size = new System.Drawing.Size(300, 21);
             this.txtRemarks.TabIndex = 11;
@@ -143,7 +157,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(12, 198);
+            this.label6.Location = new System.Drawing.Point(12, 220);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(83, 12);
             this.label6.TabIndex = 10;
@@ -222,16 +236,16 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "地址(address)";
             // 
-            // btnClose
+            // panel2
             // 
-            this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnClose.Location = new System.Drawing.Point(329, 17);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(75, 23);
-            this.btnClose.TabIndex = 4;
-            this.btnClose.Text = "取消(&C)";
-            this.btnClose.UseVisualStyleBackColor = true;
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            this.panel2.Controls.Add(this.btnImport);
+            this.panel2.Controls.Add(this.btnClose);
+            this.panel2.Controls.Add(this.btnOK);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel2.Location = new System.Drawing.Point(0, 257);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(447, 60);
+            this.panel2.TabIndex = 7;
             // 
             // btnOK
             // 
@@ -251,22 +265,33 @@
             this.panel1.Size = new System.Drawing.Size(447, 10);
             this.panel1.TabIndex = 6;
             // 
-            // panel2
+            // btnImport
             // 
-            this.panel2.Controls.Add(this.btnClose);
-            this.panel2.Controls.Add(this.btnOK);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 249);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(447, 60);
-            this.panel2.TabIndex = 7;
+            this.btnImport.Location = new System.Drawing.Point(20, 17);
+            this.btnImport.Name = "btnImport";
+            this.btnImport.Size = new System.Drawing.Size(75, 23);
+            this.btnImport.TabIndex = 6;
+            this.btnImport.Text = "导入(&I)";
+            this.btnImport.UseVisualStyleBackColor = true;
+            this.btnImport.Click += new System.EventHandler(this.btnImport_Click);
+            // 
+            // chktcpSettings
+            // 
+            this.chktcpSettings.AutoCheck = false;
+            this.chktcpSettings.AutoSize = true;
+            this.chktcpSettings.Location = new System.Drawing.Point(127, 193);
+            this.chktcpSettings.Name = "chktcpSettings";
+            this.chktcpSettings.Size = new System.Drawing.Size(294, 16);
+            this.chktcpSettings.TabIndex = 0;
+            this.chktcpSettings.Text = "是否Http伪装（*结构复杂，只能导入，不能修改）";
+            this.chktcpSettings.UseVisualStyleBackColor = true;
             // 
             // AddServerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnClose;
-            this.ClientSize = new System.Drawing.Size(447, 309);
+            this.ClientSize = new System.Drawing.Size(447, 317);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
@@ -304,5 +329,7 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Button btnImport;
+        private System.Windows.Forms.CheckBox chktcpSettings;
     }
 }

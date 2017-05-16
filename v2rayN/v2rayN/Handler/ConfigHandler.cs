@@ -19,7 +19,7 @@ namespace v2rayN.Handler
         {
             //载入配置文件 
             string result = Utils.LoadResource(configRes);
-            if (!string.IsNullOrEmpty(result))
+            if (!Utils.IsNullOrEmpty(result))
             {
                 //转成Json
                 config = Utils.FromJson<Config>(result);
@@ -27,7 +27,6 @@ namespace v2rayN.Handler
             if (config == null)
             {
                 config = new Config();
-                config.localPort = 1080;
                 config.index = -1;
                 config.logEnabled = false;
                 config.loglevel = "warning";
@@ -36,6 +35,18 @@ namespace v2rayN.Handler
                 //路由
                 config.chinasites = false;
                 config.chinaip = false;
+            }
+
+            //本地监听
+            if (config.inbound == null)
+            {
+                config.inbound = new List<InItem>();
+                InItem inItem = new InItem();
+                inItem.protocol = "socks";
+                inItem.localPort = 1080;
+                inItem.udpEnabled = true;
+
+                config.inbound.Add(inItem);
             }
 
             if (config == null
@@ -50,7 +61,6 @@ namespace v2rayN.Handler
             {
                 config.reloadV2ray = true;
             }
-
 
             return 0;
         }
@@ -150,6 +160,7 @@ namespace v2rayN.Handler
             vmessItem.alterId = config.vmess[index].alterId;
             vmessItem.security = config.vmess[index].security;
             vmessItem.network = config.vmess[index].network;
+            vmessItem.tcpSettings = config.vmess[index].tcpSettings;
             vmessItem.remarks = string.Format("{0}-副本", config.vmess[index].remarks);
             config.vmess.Add(vmessItem);
 

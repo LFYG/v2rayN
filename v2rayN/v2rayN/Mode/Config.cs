@@ -7,16 +7,10 @@ namespace v2rayN.Mode
     /// </summary>
     public class Config
     {
-
         /// <summary>
-        /// 本地监听端口
+        /// 本地监听
         /// </summary>
-        public int localPort { get; set; }
-
-        /// <summary>
-        /// 默认配置序号
-        /// </summary>
-        public int index { get; set; }
+        public List<InItem> inbound { get; set; }
 
         /// <summary>
         /// 允许日志
@@ -29,9 +23,9 @@ namespace v2rayN.Mode
         public string loglevel { get; set; }
 
         /// <summary>
-        /// 允许udp
+        /// 默认配置序号
         /// </summary>
-        public bool udpEnabled { get; set; }
+        public int index { get; set; }
 
         /// <summary>
         /// vmess服务器信息
@@ -110,11 +104,19 @@ namespace v2rayN.Mode
         }
         public string network()
         {
-            if (index < 0 || string.IsNullOrEmpty(vmess[index].network))
+            if (index < 0 || Utils.IsNullOrEmpty(vmess[index].network))
             {
                 return "tcp";
             }
             return vmess[index].network;
+        }
+        public TcpSettings tcpSettings()
+        {
+            if (index < 0)
+            {
+                return null;
+            }
+            return vmess[index].tcpSettings;
         }
 
         #endregion
@@ -123,34 +125,56 @@ namespace v2rayN.Mode
     public class VmessItem
     {
         /// <summary>
-        /// 
+        /// 远程服务器地址
         /// </summary>
         public string address { get; set; }
         /// <summary>
-        /// 
+        /// 远程服务器端口
         /// </summary>
         public int port { get; set; }
         /// <summary>
-        /// 
+        /// 远程服务器ID
         /// </summary>
         public string id { get; set; }
         /// <summary>
-        /// 
+        /// 远程服务器额外ID
         /// </summary>
         public int alterId { get; set; }
         /// <summary>
-        /// 
+        /// 本地安全策略
         /// </summary>
         public string security { get; set; }
         /// <summary>
-        /// 
+        /// tcp,kcp,ws
         /// </summary>
         public string network { get; set; }
         /// <summary>
-        /// 
+        /// 备注
         /// </summary>
         public string remarks { get; set; }
+
+        /// <summary>
+        ///  Tcp传输额外设置，直接复制给v2ray
+        /// </summary>
+        public TcpSettings tcpSettings { get; set; }
     }
 
 
+    public class InItem
+    {
+        /// <summary>
+        /// 本地监听端口
+        /// </summary>
+        public int localPort { get; set; }
+
+        /// <summary>
+        /// 协议，默认为socks
+        /// </summary>
+        public string protocol { get; set; }
+
+        /// <summary>
+        /// 允许udp
+        /// </summary>
+        public bool udpEnabled { get; set; }
+    }
 }

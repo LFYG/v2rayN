@@ -21,6 +21,10 @@ namespace v2rayN.Mode
         /// </summary>
         public Outbound outbound { get; set; }
         /// <summary>
+        /// 额外的传入连接配置
+        /// </summary>
+        public List<Inbound> inboundDetour { get; set; }
+        /// <summary>
         /// 额外的传出连接配置
         /// </summary>
         public List<OutboundDetourItem> outboundDetour { get; set; }
@@ -233,5 +237,38 @@ namespace v2rayN.Mode
         /// 
         /// </summary>
         public string network { get; set; }
+        /// <summary>
+        /// Tcp传输额外设置
+        /// </summary>
+        public TcpSettings tcpSettings { get; set; }
+    }
+
+    public class TcpSettings
+    {
+        /// <summary>
+        /// 是否重用 TCP 连接
+        /// </summary>
+        public string connectionReuse { get; set; }
+        /// <summary>
+        /// 数据包头部伪装设置
+        /// </summary>
+        public Header header { get; set; }
+    }
+
+    public class Header
+    {
+        /// <summary>
+        /// http伪装
+        /// </summary>
+        public string type { get; set; }
+        /// <summary>
+        /// 结构复杂，直接存起来
+        /// </summary>
+        public object request { get; set; }
+        /// <summary>
+        /// 结构复杂，直接存起来
+        /// </summary>
+        public object response { get; set; }
+
     }
 }

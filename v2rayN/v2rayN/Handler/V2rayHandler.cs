@@ -100,7 +100,7 @@ namespace v2rayN.Handler
                         break;
                     }
                 }
-                if (string.IsNullOrEmpty(fileName))
+                if (Utils.IsNullOrEmpty(fileName))
                 {
                     string msg = "未找到v2ray文件";
                     ShowMsg(true, msg);

@@ -337,7 +337,7 @@ namespace v2rayN
 
             this.Visible = false;
             this.Close();
-            this.Dispose();
+            //this.Dispose();
             System.Environment.Exit(System.Environment.ExitCode);
         }
 
