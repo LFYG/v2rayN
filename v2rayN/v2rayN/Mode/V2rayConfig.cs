@@ -241,6 +241,10 @@ namespace v2rayN.Mode
         /// Tcp传输额外设置
         /// </summary>
         public TcpSettings tcpSettings { get; set; }
+        /// <summary>
+        /// Kcp传输额外设置
+        /// </summary>
+        public Kcpsettings kcpsettings { get; set; }
     }
 
     public class TcpSettings
@@ -248,7 +252,7 @@ namespace v2rayN.Mode
         /// <summary>
         /// 是否重用 TCP 连接
         /// </summary>
-        public string connectionReuse { get; set; }
+        public bool connectionReuse { get; set; }
         /// <summary>
         /// 数据包头部伪装设置
         /// </summary>
@@ -258,7 +262,7 @@ namespace v2rayN.Mode
     public class Header
     {
         /// <summary>
-        /// http伪装
+        /// 伪装
         /// </summary>
         public string type { get; set; }
         /// <summary>
@@ -269,6 +273,41 @@ namespace v2rayN.Mode
         /// 结构复杂，直接存起来
         /// </summary>
         public object response { get; set; }
+    }
 
+    public class Kcpsettings
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        public int mtu { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public int tti { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public int uplinkCapacity { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public int downlinkCapacity { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool congestion { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public int readBufferSize { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public int writeBufferSize { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public Header header { get; set; }
     }
 }

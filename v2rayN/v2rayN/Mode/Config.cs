@@ -47,6 +47,11 @@ namespace v2rayN.Mode
         /// </summary>
         public bool chinaip { get; set; }
 
+        /// <summary>
+        /// 允许Mux多路复用
+        /// </summary>
+        public bool muxEnabled { get; set; }
+
         #region 函数
 
         public string address()
@@ -106,18 +111,27 @@ namespace v2rayN.Mode
         {
             if (index < 0 || Utils.IsNullOrEmpty(vmess[index].network))
             {
-                return "tcp";
+                return Global.DefaultNetwork;
             }
             return vmess[index].network;
         }
-        public TcpSettings tcpSettings()
+        public string headerType()
         {
-            if (index < 0)
+            if (index < 0 || Utils.IsNullOrEmpty(vmess[index].headerType))
             {
-                return null;
+                return Global.None;
             }
-            return vmess[index].tcpSettings;
+            return vmess[index].headerType;
         }
+        public string requestHost()
+        {
+            if (index < 0 || Utils.IsNullOrEmpty(vmess[index].requestHost))
+            {
+                return string.Empty;
+            }
+            return vmess[index].requestHost;
+        }
+
 
         #endregion
     }
@@ -154,9 +168,15 @@ namespace v2rayN.Mode
         public string remarks { get; set; }
 
         /// <summary>
-        ///  Tcp传输额外设置，直接复制给v2ray
+        /// 伪装类型
         /// </summary>
-        public TcpSettings tcpSettings { get; set; }
+        public string headerType { get; set; }
+
+        /// <summary>
+        /// 伪装的域名
+        /// </summary>
+        public string requestHost { get; set; }
+
     }
 
 

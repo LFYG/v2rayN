@@ -8,7 +8,7 @@ namespace v2rayN.Handler
     /// </summary>
     class ConfigHandler
     {
-        public static string configRes = "guiNConfig.json";
+        public static string configRes = Global.ConfigFileName;
 
         /// <summary>
         /// 载入配置文件
@@ -35,6 +35,9 @@ namespace v2rayN.Handler
                 //路由
                 config.chinasites = false;
                 config.chinaip = false;
+
+                //Mux
+                config.muxEnabled = true;
             }
 
             //本地监听
@@ -160,7 +163,8 @@ namespace v2rayN.Handler
             vmessItem.alterId = config.vmess[index].alterId;
             vmessItem.security = config.vmess[index].security;
             vmessItem.network = config.vmess[index].network;
-            vmessItem.tcpSettings = config.vmess[index].tcpSettings;
+            vmessItem.headerType = config.vmess[index].headerType;
+            vmessItem.requestHost = config.vmess[index].requestHost;
             vmessItem.remarks = string.Format("{0}-副本", config.vmess[index].remarks);
             config.vmess.Add(vmessItem);
 

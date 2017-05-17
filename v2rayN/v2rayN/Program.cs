@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using v2rayN.Forms;
 
 namespace v2rayN
 {

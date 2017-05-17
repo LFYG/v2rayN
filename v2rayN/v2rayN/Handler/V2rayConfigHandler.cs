@@ -8,8 +8,8 @@ namespace v2rayN.Handler
     /// </summary>
     class V2rayConfigHandler
     {
-        public static string v2rayConfigRes = "config.json";
-        public static string SampleRes = "v2rayN.Mode.SampleConfig.txt";
+        public static string v2rayConfigRes = Global.v2rayConfigFileName;
+        public static string SampleRes = Global.v2raySampleFileName;
 
         /// <summary>
         /// 生成v2ray的配置文件
@@ -83,7 +83,7 @@ namespace v2rayN.Handler
         /// <param name="config"></param>
         /// <param name="v2rayConfig"></param>
         /// <returns></returns>
-        public static int inbound(Config config, ref V2rayConfig v2rayConfig)
+        private static int inbound(Config config, ref V2rayConfig v2rayConfig)
         {
             try
             {
@@ -119,7 +119,7 @@ namespace v2rayN.Handler
         /// <param name="config"></param>
         /// <param name="v2rayConfig"></param>
         /// <returns></returns>
-        public static int inboundDetour(Config config, ref V2rayConfig v2rayConfig)
+        private static int inboundDetour(Config config, ref V2rayConfig v2rayConfig)
         {
             try
             {
@@ -162,7 +162,7 @@ namespace v2rayN.Handler
         /// <param name="config"></param>
         /// <param name="v2rayConfig"></param>
         /// <returns></returns>
-        public static int routing(Config config, ref V2rayConfig v2rayConfig)
+        private static int routing(Config config, ref V2rayConfig v2rayConfig)
         {
             try
             {
@@ -201,7 +201,7 @@ namespace v2rayN.Handler
         /// <param name="config"></param>
         /// <param name="v2rayConfig"></param>
         /// <returns></returns>
-        public static int outbound(Config config, ref V2rayConfig v2rayConfig)
+        private static int outbound(Config config, ref V2rayConfig v2rayConfig)
         {
             try
             {
@@ -234,16 +234,57 @@ namespace v2rayN.Handler
                 usersItem.alterId = config.alterId();
                 usersItem.security = config.security();
 
+                //Mux
+                v2rayConfig.outbound.mux.enabled = config.muxEnabled;
+
                 //远程服务器底层传输配置
                 v2rayConfig.outbound.streamSettings.network = config.network();
-                v2rayConfig.outbound.streamSettings.tcpSettings = config.tcpSettings();
 
+                //streamSettings
+                switch (config.network())
+                {
+                    //kcp基本配置暂时是默认值，用户能自己设置伪装类型
+                    case "kcp":
+                        Kcpsettings kcpsettings = new Kcpsettings();
+                        kcpsettings.mtu = 1350;
+                        kcpsettings.tti = 50;
+                        kcpsettings.uplinkCapacity = 12;
+                        kcpsettings.downlinkCapacity = 100;
+                        kcpsettings.congestion = false;
+                        kcpsettings.readBufferSize = 2;
+                        kcpsettings.writeBufferSize = 2;
+                        kcpsettings.header = new Header();
+                        kcpsettings.header.type = config.headerType();
+                        v2rayConfig.outbound.streamSettings.kcpsettings = kcpsettings;
+                        break;
+                    //ws
+                    case "ws":
+                        break;
+                    default:
+                        //tcp带http伪装
+                        if (config.headerType().Equals(Global.TcpHeaderHttp))
+                        {
+                            TcpSettings tcpSettings = new TcpSettings();
+                            tcpSettings.connectionReuse = true;
+                            tcpSettings.header = new Header();
+                            tcpSettings.header.type = config.headerType();
+
+                            //request填入自定义Host
+                            string request = Utils.GetEmbedText(Global.v2raySampleHttprequestFileName);
+                            request = request.Replace("$requestHost$", string.Format("\"{0}\"", config.requestHost()));
+                            string response = Utils.GetEmbedText(Global.v2raySampleHttpresponseFileName);
+
+                            tcpSettings.header.request = Utils.FromJson<object>(request);
+                            tcpSettings.header.response = Utils.FromJson<object>(response);
+                            v2rayConfig.outbound.streamSettings.tcpSettings = tcpSettings;
+                        }
+                        break;
+                }
             }
             catch
             {
             }
             return 0;
         }
-
     }
 }
