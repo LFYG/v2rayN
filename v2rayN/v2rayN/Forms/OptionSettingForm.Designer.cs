@@ -29,8 +29,11 @@
         private void InitializeComponent()
         {
             this.btnClose = new System.Windows.Forms.Button();
-            this.btnOK = new System.Windows.Forms.Button();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.chkAutoRun = new System.Windows.Forms.CheckBox();
+            this.chkmuxEnabled = new System.Windows.Forms.CheckBox();
             this.chkAllowIn2 = new System.Windows.Forms.CheckBox();
             this.chkudpEnabled2 = new System.Windows.Forms.CheckBox();
             this.cmbprotocol2 = new System.Windows.Forms.ComboBox();
@@ -44,21 +47,31 @@
             this.label5 = new System.Windows.Forms.Label();
             this.txtlocalPort = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.tabControl2 = new System.Windows.Forms.TabControl();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
             this.chkBypassChinasites = new System.Windows.Forms.CheckBox();
             this.chkBypassChinaip = new System.Windows.Forms.CheckBox();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.chkmuxEnabled = new System.Windows.Forms.CheckBox();
-            this.groupBox1.SuspendLayout();
+            this.btnOK = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.label4 = new System.Windows.Forms.Label();
+            this.txtUseragent = new System.Windows.Forms.TextBox();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.txtUserdirect = new System.Windows.Forms.TextBox();
+            this.txtUserblock = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.tabControl2.SuspendLayout();
+            this.tabPage3.SuspendLayout();
+            this.tabPage4.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.tabPage5.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnClose
@@ -72,18 +85,31 @@
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
-            // btnOK
+            // tabControl1
             // 
-            this.btnOK.Location = new System.Drawing.Point(267, 16);
-            this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(75, 23);
-            this.btnOK.TabIndex = 8;
-            this.btnOK.Text = "确定(&O)";
-            this.btnOK.UseVisualStyleBackColor = true;
-            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl1.Location = new System.Drawing.Point(0, 10);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(528, 496);
+            this.tabControl1.TabIndex = 10;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.groupBox1);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(520, 470);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "  基础设置  ";
+            this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.chkAutoRun);
             this.groupBox1.Controls.Add(this.chkmuxEnabled);
             this.groupBox1.Controls.Add(this.chkAllowIn2);
             this.groupBox1.Controls.Add(this.chkudpEnabled2);
@@ -101,9 +127,29 @@
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(3, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(460, 260);
+            this.groupBox1.Size = new System.Drawing.Size(514, 464);
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
+            // 
+            // chkAutoRun
+            // 
+            this.chkAutoRun.AutoSize = true;
+            this.chkAutoRun.Location = new System.Drawing.Point(13, 202);
+            this.chkAutoRun.Name = "chkAutoRun";
+            this.chkAutoRun.Size = new System.Drawing.Size(180, 16);
+            this.chkAutoRun.TabIndex = 21;
+            this.chkAutoRun.Text = "开机自动启动(可能会不成功)";
+            this.chkAutoRun.UseVisualStyleBackColor = true;
+            // 
+            // chkmuxEnabled
+            // 
+            this.chkmuxEnabled.AutoSize = true;
+            this.chkmuxEnabled.Location = new System.Drawing.Point(13, 140);
+            this.chkmuxEnabled.Name = "chkmuxEnabled";
+            this.chkmuxEnabled.Size = new System.Drawing.Size(174, 16);
+            this.chkmuxEnabled.TabIndex = 20;
+            this.chkmuxEnabled.Text = "开启Mux多路复用(默认开启)";
+            this.chkmuxEnabled.UseVisualStyleBackColor = true;
             // 
             // chkAllowIn2
             // 
@@ -188,7 +234,7 @@
             // chklogEnabled
             // 
             this.chklogEnabled.AutoSize = true;
-            this.chklogEnabled.Location = new System.Drawing.Point(124, 190);
+            this.chklogEnabled.Location = new System.Drawing.Point(13, 171);
             this.chklogEnabled.Name = "chklogEnabled";
             this.chklogEnabled.Size = new System.Drawing.Size(156, 16);
             this.chklogEnabled.TabIndex = 9;
@@ -205,15 +251,15 @@
             "warning",
             "error",
             "none"});
-            this.cmbloglevel.Location = new System.Drawing.Point(124, 212);
+            this.cmbloglevel.Location = new System.Drawing.Point(257, 169);
             this.cmbloglevel.Name = "cmbloglevel";
-            this.cmbloglevel.Size = new System.Drawing.Size(125, 20);
+            this.cmbloglevel.Size = new System.Drawing.Size(97, 20);
             this.cmbloglevel.TabIndex = 6;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(55, 216);
+            this.label5.Location = new System.Drawing.Point(193, 173);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(53, 12);
             this.label5.TabIndex = 8;
@@ -235,62 +281,68 @@
             this.label2.TabIndex = 2;
             this.label2.Text = "本地监听端口";
             // 
-            // panel1
-            // 
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(474, 10);
-            this.panel1.TabIndex = 9;
-            // 
-            // tabControl1
-            // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(0, 10);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(474, 292);
-            this.tabControl1.TabIndex = 10;
-            // 
-            // tabPage1
-            // 
-            this.tabPage1.Controls.Add(this.groupBox1);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(466, 266);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "  基础设置  ";
-            this.tabPage1.UseVisualStyleBackColor = true;
-            // 
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.groupBox2);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(466, 266);
+            this.tabPage2.Size = new System.Drawing.Size(520, 470);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "  路由设置  ";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.label4);
+            this.groupBox2.Controls.Add(this.tabControl2);
             this.groupBox2.Controls.Add(this.chkBypassChinasites);
             this.groupBox2.Controls.Add(this.chkBypassChinaip);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox2.Location = new System.Drawing.Point(3, 3);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(460, 260);
+            this.groupBox2.Size = new System.Drawing.Size(514, 464);
             this.groupBox2.TabIndex = 12;
             this.groupBox2.TabStop = false;
+            // 
+            // tabControl2
+            // 
+            this.tabControl2.Controls.Add(this.tabPage3);
+            this.tabControl2.Controls.Add(this.tabPage4);
+            this.tabControl2.Controls.Add(this.tabPage5);
+            this.tabControl2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.tabControl2.Location = new System.Drawing.Point(3, 83);
+            this.tabControl2.Name = "tabControl2";
+            this.tabControl2.SelectedIndex = 0;
+            this.tabControl2.Size = new System.Drawing.Size(508, 378);
+            this.tabControl2.TabIndex = 12;
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.txtUseragent);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(500, 352);
+            this.tabPage3.TabIndex = 0;
+            this.tabPage3.Text = "  代理的网址或IP  ";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // tabPage4
+            // 
+            this.tabPage4.Controls.Add(this.txtUserdirect);
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(500, 352);
+            this.tabPage4.TabIndex = 1;
+            this.tabPage4.Text = "  直连的网址或IP  ";
+            this.tabPage4.UseVisualStyleBackColor = true;
             // 
             // chkBypassChinasites
             // 
             this.chkBypassChinasites.AutoSize = true;
-            this.chkBypassChinasites.Location = new System.Drawing.Point(29, 20);
+            this.chkBypassChinasites.Location = new System.Drawing.Point(15, 20);
             this.chkBypassChinasites.Name = "chkBypassChinasites";
             this.chkBypassChinasites.Size = new System.Drawing.Size(96, 16);
             this.chkBypassChinasites.TabIndex = 10;
@@ -300,7 +352,7 @@
             // chkBypassChinaip
             // 
             this.chkBypassChinaip.AutoSize = true;
-            this.chkBypassChinaip.Location = new System.Drawing.Point(29, 42);
+            this.chkBypassChinaip.Location = new System.Drawing.Point(15, 42);
             this.chkBypassChinaip.Name = "chkBypassChinaip";
             this.chkBypassChinaip.Size = new System.Drawing.Size(84, 16);
             this.chkBypassChinaip.TabIndex = 11;
@@ -312,27 +364,86 @@
             this.panel2.Controls.Add(this.btnClose);
             this.panel2.Controls.Add(this.btnOK);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 302);
+            this.panel2.Location = new System.Drawing.Point(0, 506);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(474, 60);
+            this.panel2.Size = new System.Drawing.Size(528, 60);
             this.panel2.TabIndex = 11;
             // 
-            // chkmuxEnabled
+            // btnOK
             // 
-            this.chkmuxEnabled.AutoSize = true;
-            this.chkmuxEnabled.Location = new System.Drawing.Point(124, 159);
-            this.chkmuxEnabled.Name = "chkmuxEnabled";
-            this.chkmuxEnabled.Size = new System.Drawing.Size(174, 16);
-            this.chkmuxEnabled.TabIndex = 20;
-            this.chkmuxEnabled.Text = "开启Mux多路复用(默认开启)";
-            this.chkmuxEnabled.UseVisualStyleBackColor = true;
+            this.btnOK.Location = new System.Drawing.Point(267, 16);
+            this.btnOK.Name = "btnOK";
+            this.btnOK.Size = new System.Drawing.Size(75, 23);
+            this.btnOK.TabIndex = 8;
+            this.btnOK.Text = "确定(&O)";
+            this.btnOK.UseVisualStyleBackColor = true;
+            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
+            // 
+            // panel1
+            // 
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(528, 10);
+            this.panel1.TabIndex = 9;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.ForeColor = System.Drawing.Color.Brown;
+            this.label4.Location = new System.Drawing.Point(13, 68);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(269, 12);
+            this.label4.TabIndex = 13;
+            this.label4.Text = "*设置的网址或IP，用逗号(,)隔开，可以一行多个";
+            // 
+            // txtUseragent
+            // 
+            this.txtUseragent.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtUseragent.Location = new System.Drawing.Point(3, 3);
+            this.txtUseragent.Multiline = true;
+            this.txtUseragent.Name = "txtUseragent";
+            this.txtUseragent.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtUseragent.Size = new System.Drawing.Size(494, 346);
+            this.txtUseragent.TabIndex = 0;
+            // 
+            // tabPage5
+            // 
+            this.tabPage5.Controls.Add(this.txtUserblock);
+            this.tabPage5.Location = new System.Drawing.Point(4, 22);
+            this.tabPage5.Name = "tabPage5";
+            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage5.Size = new System.Drawing.Size(500, 352);
+            this.tabPage5.TabIndex = 2;
+            this.tabPage5.Text = "  阻止的网址或IP  ";
+            this.tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // txtUserdirect
+            // 
+            this.txtUserdirect.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtUserdirect.Location = new System.Drawing.Point(3, 3);
+            this.txtUserdirect.Multiline = true;
+            this.txtUserdirect.Name = "txtUserdirect";
+            this.txtUserdirect.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtUserdirect.Size = new System.Drawing.Size(494, 346);
+            this.txtUserdirect.TabIndex = 1;
+            // 
+            // txtUserblock
+            // 
+            this.txtUserblock.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtUserblock.Location = new System.Drawing.Point(3, 3);
+            this.txtUserblock.Multiline = true;
+            this.txtUserblock.Name = "txtUserblock";
+            this.txtUserblock.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtUserblock.Size = new System.Drawing.Size(494, 346);
+            this.txtUserblock.TabIndex = 1;
             // 
             // OptionSettingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnClose;
-            this.ClientSize = new System.Drawing.Size(474, 362);
+            this.ClientSize = new System.Drawing.Size(528, 566);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
@@ -340,14 +451,21 @@
             this.Name = "OptionSettingForm";
             this.Text = "参数设置";
             this.Load += new System.EventHandler(this.OptionSettingForm_Load);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.tabControl2.ResumeLayout(false);
+            this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
+            this.tabPage4.ResumeLayout(false);
+            this.tabPage4.PerformLayout();
             this.panel2.ResumeLayout(false);
+            this.tabPage5.ResumeLayout(false);
+            this.tabPage5.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -379,5 +497,14 @@
         private System.Windows.Forms.CheckBox chkudpEnabled2;
         private System.Windows.Forms.CheckBox chkAllowIn2;
         private System.Windows.Forms.CheckBox chkmuxEnabled;
+        private System.Windows.Forms.CheckBox chkAutoRun;
+        private System.Windows.Forms.TabControl tabControl2;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox txtUseragent;
+        private System.Windows.Forms.TabPage tabPage5;
+        private System.Windows.Forms.TextBox txtUserdirect;
+        private System.Windows.Forms.TextBox txtUserblock;
     }
 }

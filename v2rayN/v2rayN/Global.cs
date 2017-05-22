@@ -7,6 +7,8 @@ namespace v2rayN
 {
     class Global
     {
+        #region 常量
+
         /// <summary>
         /// 本软件配置文件名
         /// </summary>
@@ -29,12 +31,12 @@ namespace v2rayN
         /// v2ray配置Httpresponse文件名
         /// </summary>
         public const string v2raySampleHttpresponseFileName = "v2rayN.Mode.SampleHttpresponse.txt";
-        
+
 
         /// <summary>
         /// 默认加密方式
         /// </summary>
-        public const string DefaultSecurity = "aes-128-cfb";
+        public const string DefaultSecurity = "aes-128-gcm";
 
         /// <summary>
         /// 默认传输协议
@@ -51,5 +53,31 @@ namespace v2rayN
         /// </summary>
         public const string None = "none";
 
+        /// <summary>
+        /// 代理 tag值
+        /// </summary>
+        public const string agentTag = "agentout";
+
+        /// <summary>
+        /// 直连 tag值
+        /// </summary>
+        public const string directTag = "direct";
+
+        /// <summary>
+        /// 阻止 tag值
+        /// </summary>
+        public const string blockTag = "blockout";
+
+        #endregion
+
+        #region 全局变量
+
+        /// <summary>
+        /// 是否需要重启服务V2ray
+        /// </summary>
+        public static bool reloadV2ray { get; set; }
+
+
+        #endregion
     }
 }

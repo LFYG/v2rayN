@@ -33,9 +33,9 @@ namespace v2rayN.Mode
         public List<VmessItem> vmess { get; set; }
 
         /// <summary>
-        /// 是否需要重启服务V2ray
+        /// 允许Mux多路复用
         /// </summary>
-        public bool reloadV2ray { get; set; }
+        public bool muxEnabled { get; set; }
 
         /// <summary>
         /// 路由=>绕过大陆网址
@@ -48,9 +48,19 @@ namespace v2rayN.Mode
         public bool chinaip { get; set; }
 
         /// <summary>
-        /// 允许Mux多路复用
+        /// 用户自定义需代理的网址或ip
         /// </summary>
-        public bool muxEnabled { get; set; }
+        public List<string> useragent { get; set; }
+
+        /// <summary>
+        /// 用户自定义直连的网址或ip
+        /// </summary>
+        public List<string> userdirect { get; set; }
+
+        /// <summary>
+        /// 用户自定义阻止的网址或ip
+        /// </summary>
+        public List<string> userblock { get; set; }
 
         #region 函数
 

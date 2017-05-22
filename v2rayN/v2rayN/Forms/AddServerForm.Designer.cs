@@ -30,6 +30,12 @@
         {
             this.btnClose = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.txtRequestHost = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.cmbHeaderType = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.cmbNetwork = new System.Windows.Forms.ComboBox();
@@ -50,15 +56,9 @@
             this.btnImport = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.txtRequestHost = new System.Windows.Forms.TextBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.cmbHeaderType = new System.Windows.Forms.ComboBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox1.SuspendLayout();
-            this.panel2.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnClose
@@ -99,6 +99,70 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "服务器";
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.label12);
+            this.groupBox2.Controls.Add(this.txtRequestHost);
+            this.groupBox2.Controls.Add(this.label11);
+            this.groupBox2.Controls.Add(this.label10);
+            this.groupBox2.Controls.Add(this.cmbHeaderType);
+            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.groupBox2.Location = new System.Drawing.Point(3, 249);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(509, 95);
+            this.groupBox2.TabIndex = 21;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "不清楚则保持默认值";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(282, 34);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(161, 12);
+            this.label12.TabIndex = 20;
+            this.label12.Text = "*tcp或kcp伪装类型,默认none";
+            // 
+            // txtRequestHost
+            // 
+            this.txtRequestHost.Location = new System.Drawing.Point(124, 58);
+            this.txtRequestHost.Name = "txtRequestHost";
+            this.txtRequestHost.Size = new System.Drawing.Size(359, 21);
+            this.txtRequestHost.TabIndex = 16;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(9, 34);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(89, 12);
+            this.label11.TabIndex = 19;
+            this.label11.Text = "伪装类型(type)";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(9, 62);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(107, 12);
+            this.label10.TabIndex = 17;
+            this.label10.Text = "Tcp伪装域名(host)";
+            // 
+            // cmbHeaderType
+            // 
+            this.cmbHeaderType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbHeaderType.FormattingEnabled = true;
+            this.cmbHeaderType.Items.AddRange(new object[] {
+            "none",
+            "http",
+            "srtp",
+            "utp",
+            "wechat-video"});
+            this.cmbHeaderType.Location = new System.Drawing.Point(124, 30);
+            this.cmbHeaderType.Name = "cmbHeaderType";
+            this.cmbHeaderType.Size = new System.Drawing.Size(143, 20);
+            this.cmbHeaderType.TabIndex = 18;
+            // 
             // label9
             // 
             this.label9.AutoSize = true;
@@ -115,7 +179,7 @@
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(155, 12);
             this.label8.TabIndex = 14;
-            this.label8.Text = "*随便选,建议(aes-128-cfb)";
+            this.label8.Text = "*随便选,建议(aes-128-gcm)";
             // 
             // cmbNetwork
             // 
@@ -281,70 +345,6 @@
             this.panel1.Size = new System.Drawing.Size(515, 10);
             this.panel1.TabIndex = 6;
             // 
-            // txtRequestHost
-            // 
-            this.txtRequestHost.Location = new System.Drawing.Point(124, 58);
-            this.txtRequestHost.Name = "txtRequestHost";
-            this.txtRequestHost.Size = new System.Drawing.Size(359, 21);
-            this.txtRequestHost.TabIndex = 16;
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(9, 62);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(107, 12);
-            this.label10.TabIndex = 17;
-            this.label10.Text = "Tcp伪装域名(host)";
-            // 
-            // cmbHeaderType
-            // 
-            this.cmbHeaderType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbHeaderType.FormattingEnabled = true;
-            this.cmbHeaderType.Items.AddRange(new object[] {
-            "none",
-            "http",
-            "srtp",
-            "utp",
-            "wechat-video"});
-            this.cmbHeaderType.Location = new System.Drawing.Point(124, 30);
-            this.cmbHeaderType.Name = "cmbHeaderType";
-            this.cmbHeaderType.Size = new System.Drawing.Size(143, 20);
-            this.cmbHeaderType.TabIndex = 18;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(9, 34);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(89, 12);
-            this.label11.TabIndex = 19;
-            this.label11.Text = "伪装类型(type)";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(282, 34);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(161, 12);
-            this.label12.TabIndex = 20;
-            this.label12.Text = "*tcp或kcp伪装类型,默认none";
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.label12);
-            this.groupBox2.Controls.Add(this.txtRequestHost);
-            this.groupBox2.Controls.Add(this.label11);
-            this.groupBox2.Controls.Add(this.label10);
-            this.groupBox2.Controls.Add(this.cmbHeaderType);
-            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.groupBox2.Location = new System.Drawing.Point(3, 249);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(509, 95);
-            this.groupBox2.TabIndex = 21;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "不清楚则保持默认值";
-            // 
             // AddServerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -360,9 +360,9 @@
             this.Load += new System.EventHandler(this.AddServerForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.panel2.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.panel2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

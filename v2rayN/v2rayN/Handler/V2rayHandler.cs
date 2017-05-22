@@ -35,7 +35,7 @@ namespace v2rayN.Handler
         /// </summary>
         public void LoadV2ray(Config config)
         {
-            if (config.reloadV2ray)
+            if (Global.reloadV2ray)
             {
                 string msg = string.Empty;
                 if (V2rayConfigHandler.GenerateConfigFile(config, out msg) != 0)

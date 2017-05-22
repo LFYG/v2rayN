@@ -65,7 +65,7 @@ namespace v2rayN.Handler
                 //vmess协议服务器配置
                 outbound(config, ref v2rayConfig);
 
-                Utils.ToJsonFile(v2rayConfig, v2rayConfigRes);
+                Utils.ToJsonFile(v2rayConfig, Utils.GetPath(v2rayConfigRes));
 
                 msg = string.Format("配置成功 \r\n{0}({1}:{2})", config.remarks(), config.address(), config.port());
             }
@@ -170,12 +170,20 @@ namespace v2rayN.Handler
                   && v2rayConfig.routing.settings != null
                   && v2rayConfig.routing.settings.rules != null)
                 {
+                    //自定义
+                    //需代理
+                    routingUserRule(config.useragent, Global.agentTag, ref v2rayConfig);
+                    //直连
+                    routingUserRule(config.userdirect, Global.directTag, ref v2rayConfig);
+                    //阻止
+                    routingUserRule(config.userblock, Global.blockTag, ref v2rayConfig);
+
                     //绕过大陆网址
                     if (config.chinasites)
                     {
                         RulesItem rulesItem = new RulesItem();
                         rulesItem.type = "chinasites";
-                        rulesItem.outboundTag = "direct";
+                        rulesItem.outboundTag = Global.directTag;
                         v2rayConfig.routing.settings.rules.Add(rulesItem);
                     }
                     //绕过大陆ip
@@ -183,7 +191,7 @@ namespace v2rayN.Handler
                     {
                         RulesItem rulesItem = new RulesItem();
                         rulesItem.type = "chinaip";
-                        rulesItem.outboundTag = "direct";
+                        rulesItem.outboundTag = Global.directTag;
                         v2rayConfig.routing.settings.rules.Add(rulesItem);
                     }
                 }
@@ -194,6 +202,57 @@ namespace v2rayN.Handler
             }
             return 0;
         }
+        private static int routingUserRule(List<string> userRule, string tag, ref V2rayConfig v2rayConfig)
+        {
+            try
+            {
+                if (userRule != null
+                    && userRule.Count > 0)
+                {
+                    //Domain
+                    RulesItem rulesDomain = new RulesItem();
+                    rulesDomain.type = "field";
+                    rulesDomain.outboundTag = tag;
+                    rulesDomain.domain = new List<string>();
+
+                    //IP
+                    RulesItem rulesIP = new RulesItem();
+                    rulesIP.type = "field";
+                    rulesIP.outboundTag = tag;
+                    rulesIP.ip = new List<string>();
+
+                    for (int k = 0; k < userRule.Count; k++)
+                    {
+                        string url = userRule[k].Trim();
+                        if (Utils.IsNullOrEmpty(url))
+                        {
+                            continue;
+                        }
+                        if (Utils.IsIP(url))
+                        {
+                            rulesIP.ip.Add(url);
+                        }
+                        else if (Utils.IsDomain(url))
+                        {
+                            rulesDomain.domain.Add(url);
+                        }
+                    }
+                    if (rulesDomain.domain.Count > 0)
+                    {
+                        v2rayConfig.routing.settings.rules.Add(rulesDomain);
+                    }
+                    if (rulesIP.ip.Count > 0)
+                    {
+                        v2rayConfig.routing.settings.rules.Add(rulesIP);
+                    }
+                }
+            }
+            catch
+            {
+            }
+            return 0;
+        }
+
 
         /// <summary>
         /// vmess协议服务器配置

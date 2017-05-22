@@ -14,7 +14,8 @@
       "ip": "127.0.0.1"
     }
   },
-  "outbound": {
+  "outbound": {  
+    "tag": "agentout",
     "protocol": "vmess",
     "settings": {
       "vnext": [
@@ -43,7 +44,16 @@
       "protocol": "freedom",
       "settings": {},
       "tag": "direct"
-    }
+    },
+    {
+      "protocol": "blackhole",
+      "tag": "blockout",
+      "settings": {
+        "response": {
+          "type": "http"
+        }
+      }
+    }  
   ],
   "dns": {
     "servers": [
@@ -56,27 +66,7 @@
     "strategy": "rules",
     "settings": {
       "domainStrategy": "IPIfNonMatch",
-      "rules": [
-        {
-          "type": "field",
-          "port": "1-52",
-          "outboundTag": "direct"
-        },
-        {
-          "type": "field",
-          "port": "54-79",
-          "outboundTag": "direct"
-        },
-        {
-          "type": "field",
-          "port": "81-442",
-          "outboundTag": "direct"
-        },
-        {
-          "type": "field",
-          "port": "444-65535",
-          "outboundTag": "direct"
-        },
+      "rules": [       
         {
           "type": "field",
           "ip": [

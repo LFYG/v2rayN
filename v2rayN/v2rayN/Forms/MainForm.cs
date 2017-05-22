@@ -118,12 +118,12 @@ namespace v2rayN.Forms
         /// </summary>
         private void LoadV2ray()
         {
-            if (config.reloadV2ray)
+            if (Global.reloadV2ray)
             {
                 ClearMsg();
             }
             v2rayHandler.LoadV2ray(config);
-            config.reloadV2ray = false;
+            Global.reloadV2ray = false;
         }
 
         /// <summary>
@@ -234,7 +234,7 @@ namespace v2rayN.Forms
 
         private void btnReload_Click(object sender, EventArgs e)
         {
-            config.reloadV2ray = true;
+            Global.reloadV2ray = true;
             LoadV2ray();
         }
 

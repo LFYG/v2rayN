@@ -141,6 +141,10 @@ namespace v2rayN.Mode
     public class Outbound
     {
         /// <summary>
+        /// 默认值agentout
+        /// </summary>
+        public string tag { get; set; }
+        /// <summary>
         /// 
         /// </summary>
         public string protocol { get; set; }
@@ -160,6 +164,18 @@ namespace v2rayN.Mode
 
     public class OutboundDetoursettings
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        public Response response { get; set; }
+    }
+
+    public class Response
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        public string type { get; set; }
     }
 
     public class OutboundDetourItem
@@ -205,6 +221,11 @@ namespace v2rayN.Mode
         /// 
         /// </summary>
         public List<string> ip { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public List<string> domain { get; set; }
     }
 
     public class Routingsettings

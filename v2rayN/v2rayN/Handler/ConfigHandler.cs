@@ -18,7 +18,7 @@ namespace v2rayN.Handler
         public static int LoadConfig(ref Config config)
         {
             //载入配置文件 
-            string result = Utils.LoadResource(configRes);
+            string result = Utils.LoadResource(Utils.GetPath(configRes));
             if (!Utils.IsNullOrEmpty(result))
             {
                 //转成Json
@@ -51,6 +51,19 @@ namespace v2rayN.Handler
 
                 config.inbound.Add(inItem);
             }
+            //路由规则
+            if (config.useragent == null)
+            {
+                config.useragent = new List<string>();
+            }
+            if (config.userdirect == null)
+            {
+                config.userdirect = new List<string>();
+            }
+            if (config.userblock == null)
+            {
+                config.userblock = new List<string>();
+            }
 
             if (config == null
                 || config.index < 0
@@ -58,11 +71,11 @@ namespace v2rayN.Handler
                 || config.index > config.vmess.Count - 1
                 )
             {
-                config.reloadV2ray = false;
+                Global.reloadV2ray = false;
             }
             else
             {
-                config.reloadV2ray = true;
+                Global.reloadV2ray = true;
             }
 
             return 0;
@@ -83,7 +96,7 @@ namespace v2rayN.Handler
                 config.vmess[index] = vmessItem;
                 if (config.index.Equals(index))
                 {
-                    config.reloadV2ray = true;
+                    Global.reloadV2ray = true;
                 }
             }
             else
@@ -93,7 +106,7 @@ namespace v2rayN.Handler
                 if (config.vmess.Count == 1)
                 {
                     config.index = 0;
-                    config.reloadV2ray = true;
+                    Global.reloadV2ray = true;
                 }
             }
 
@@ -130,12 +143,12 @@ namespace v2rayN.Handler
                 {
                     config.index = -1;
                 }
-                config.reloadV2ray = true;
+                Global.reloadV2ray = true;
             }
             else if (index < config.index)//移除默认之前的
             {
                 config.index--;
-                config.reloadV2ray = true;
+                Global.reloadV2ray = true;
             }
 
             ToJsonFile(config);
@@ -192,7 +205,7 @@ namespace v2rayN.Handler
             //    return -1;
             //}
             config.index = index;
-            config.reloadV2ray = true;
+            Global.reloadV2ray = true;
 
             ToJsonFile(config);
 
@@ -206,7 +219,7 @@ namespace v2rayN.Handler
         /// <returns></returns>
         public static int SaveConfig(ref Config config)
         {
-            config.reloadV2ray = true;
+            Global.reloadV2ray = true;
 
             ToJsonFile(config);
 
@@ -219,7 +232,7 @@ namespace v2rayN.Handler
         /// <param name="config"></param>
         public static void ToJsonFile(Config config)
         {
-            Utils.ToJsonFile(config, configRes);
+            Utils.ToJsonFile(config, Utils.GetPath(configRes));
         }
 
     }
