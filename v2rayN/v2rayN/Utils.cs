@@ -1,7 +1,9 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
+using System.Net.NetworkInformation;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -139,7 +141,6 @@ namespace v2rayN
         }
 
         #endregion
-
 
         #region 数据检查
 
@@ -309,6 +310,65 @@ namespace v2rayN
         {
             return System.Windows.Forms.Application.ExecutablePath;
         }
+
+        #endregion
+
+        #region 测速
+
+        /// <summary>
+        /// Ping
+        /// </summary>
+        /// <param name="host"></param>
+        /// <returns></returns>
+        public static long Ping(string host)
+        {
+            long roundtripTime = 0;
+            try
+            {
+                long totalTime = 0;
+                int timeout = 120;
+                int echoNum = 3;
+                Ping pingSender = new Ping();
+                for (int i = 0; i < echoNum; i++)
+                {
+                    PingReply reply = pingSender.Send(host, timeout);
+                    if (reply.Status == IPStatus.Success)
+                    {
+                        totalTime += reply.RoundtripTime;
+                    }
+                }
+                roundtripTime = totalTime / echoNum;
+            }
+            catch
+            {
+                return -1;
+            }
+            return roundtripTime;
+        }
+
+        #endregion
+
+        #region 杂项
+
+        /// <summary>
+        /// 取得版本
+        /// </summary>
+        /// <returns></returns>
+        public static string GetVersion()
+        {
+            try
+            {
+                string location = GetExePath();
+                return string.Format("v2rayN - V{0} - {1}",
+                        FileVersionInfo.GetVersionInfo(location).FileVersion.ToString(),
+                        File.GetLastWriteTime(location).ToString("yyyy/MM/dd"));
+            }
+            catch
+            {
+                return string.Empty;
+            }
+        }
+
 
         #endregion
     }

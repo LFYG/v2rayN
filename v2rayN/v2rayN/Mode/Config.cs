@@ -173,7 +173,7 @@ namespace v2rayN.Mode
         /// </summary>
         public string network { get; set; }
         /// <summary>
-        /// 备注
+        /// 备注或别名
         /// </summary>
         public string remarks { get; set; }
 

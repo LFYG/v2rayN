@@ -8,8 +8,8 @@ namespace v2rayN.Handler
     /// </summary>
     class V2rayConfigHandler
     {
-        public static string v2rayConfigRes = Global.v2rayConfigFileName;
-        public static string SampleRes = Global.v2raySampleFileName;
+        private static string v2rayConfigRes = Global.v2rayConfigFileName;
+        private static string SampleRes = Global.v2raySampleFileName;
 
         /// <summary>
         /// 生成v2ray的配置文件

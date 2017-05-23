@@ -53,7 +53,7 @@ namespace v2rayN.Handler
         /// <summary>
         /// V2ray重启
         /// </summary>
-        public void V2rayRestart()
+        private void V2rayRestart()
         {
             V2rayStop();
             V2rayStart();
@@ -83,7 +83,7 @@ namespace v2rayN.Handler
         /// <summary>
         /// V2ray启动
         /// </summary>
-        public void V2rayStart()
+        private void V2rayStart()
         {
             ShowMsg(false, string.Format("启动服务({0})......", DateTime.Now.ToString()));
 
@@ -94,6 +94,7 @@ namespace v2rayN.Handler
                 for (int k = 0; k < lstV2ray.Count; k++)
                 {
                     string vName = string.Format("{0}.exe", lstV2ray[k]);
+                    vName = Utils.GetPath(vName);
                     if (File.Exists(vName))
                     {
                         fileName = vName;

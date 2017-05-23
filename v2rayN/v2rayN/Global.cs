@@ -10,6 +10,11 @@ namespace v2rayN
         #region 常量
 
         /// <summary>
+        /// 更新链接
+        /// </summary>
+        public const string UpdateUrl = @"https://github.com/v2ray/v2rayN/releases";
+
+        /// <summary>
         /// 本软件配置文件名
         /// </summary>
         public const string ConfigFileName = "guiNConfig.json";
@@ -79,5 +84,8 @@ namespace v2rayN
 
 
         #endregion
+
+        
+
     }
 }

@@ -8,7 +8,7 @@ namespace v2rayN.Handler
     /// </summary>
     class ConfigHandler
     {
-        public static string configRes = Global.ConfigFileName;
+        private static string configRes = Global.ConfigFileName;
 
         /// <summary>
         /// 载入配置文件

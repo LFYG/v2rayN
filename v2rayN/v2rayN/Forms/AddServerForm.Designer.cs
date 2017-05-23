@@ -56,6 +56,7 @@
             this.btnImport = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label13 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -74,6 +75,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label13);
             this.groupBox1.Controls.Add(this.groupBox2);
             this.groupBox1.Controls.Add(this.label9);
             this.groupBox1.Controls.Add(this.label8);
@@ -221,7 +223,7 @@
             // 
             this.txtRemarks.Location = new System.Drawing.Point(127, 199);
             this.txtRemarks.Name = "txtRemarks";
-            this.txtRemarks.Size = new System.Drawing.Size(359, 21);
+            this.txtRemarks.Size = new System.Drawing.Size(143, 21);
             this.txtRemarks.TabIndex = 11;
             // 
             // label6
@@ -231,7 +233,7 @@
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(83, 12);
             this.label6.TabIndex = 10;
-            this.label6.Text = "备注(remarks)";
+            this.label6.Text = "别名(remarks)";
             // 
             // label5
             // 
@@ -345,6 +347,15 @@
             this.panel1.Size = new System.Drawing.Size(515, 10);
             this.panel1.TabIndex = 6;
             // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(285, 203);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(113, 12);
+            this.label13.TabIndex = 22;
+            this.label13.Text = "*手填,方便识别管理";
+            // 
             // AddServerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -397,5 +408,6 @@
         private System.Windows.Forms.ComboBox cmbHeaderType;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Label label13;
     }
 }

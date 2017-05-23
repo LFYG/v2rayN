@@ -49,19 +49,19 @@
             this.label2 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.txtUseragent = new System.Windows.Forms.TextBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.txtUserdirect = new System.Windows.Forms.TextBox();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.txtUserblock = new System.Windows.Forms.TextBox();
             this.chkBypassChinasites = new System.Windows.Forms.CheckBox();
             this.chkBypassChinaip = new System.Windows.Forms.CheckBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnOK = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.label4 = new System.Windows.Forms.Label();
-            this.txtUseragent = new System.Windows.Forms.TextBox();
-            this.tabPage5 = new System.Windows.Forms.TabPage();
-            this.txtUserdirect = new System.Windows.Forms.TextBox();
-            this.txtUserblock = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -70,8 +70,8 @@
             this.tabControl2.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.tabPage4.SuspendLayout();
-            this.panel2.SuspendLayout();
             this.tabPage5.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnClose
@@ -305,6 +305,16 @@
             this.groupBox2.TabIndex = 12;
             this.groupBox2.TabStop = false;
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.ForeColor = System.Drawing.Color.Brown;
+            this.label4.Location = new System.Drawing.Point(13, 68);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(269, 12);
+            this.label4.TabIndex = 13;
+            this.label4.Text = "*设置的网址或IP，用逗号(,)隔开，可以一行多个";
+            // 
             // tabControl2
             // 
             this.tabControl2.Controls.Add(this.tabPage3);
@@ -328,6 +338,16 @@
             this.tabPage3.Text = "  代理的网址或IP  ";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // txtUseragent
+            // 
+            this.txtUseragent.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtUseragent.Location = new System.Drawing.Point(3, 3);
+            this.txtUseragent.Multiline = true;
+            this.txtUseragent.Name = "txtUseragent";
+            this.txtUseragent.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtUseragent.Size = new System.Drawing.Size(494, 346);
+            this.txtUseragent.TabIndex = 0;
+            // 
             // tabPage4
             // 
             this.tabPage4.Controls.Add(this.txtUserdirect);
@@ -338,6 +358,37 @@
             this.tabPage4.TabIndex = 1;
             this.tabPage4.Text = "  直连的网址或IP  ";
             this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // txtUserdirect
+            // 
+            this.txtUserdirect.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtUserdirect.Location = new System.Drawing.Point(3, 3);
+            this.txtUserdirect.Multiline = true;
+            this.txtUserdirect.Name = "txtUserdirect";
+            this.txtUserdirect.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtUserdirect.Size = new System.Drawing.Size(494, 346);
+            this.txtUserdirect.TabIndex = 1;
+            // 
+            // tabPage5
+            // 
+            this.tabPage5.Controls.Add(this.txtUserblock);
+            this.tabPage5.Location = new System.Drawing.Point(4, 22);
+            this.tabPage5.Name = "tabPage5";
+            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage5.Size = new System.Drawing.Size(500, 352);
+            this.tabPage5.TabIndex = 2;
+            this.tabPage5.Text = "  阻止的网址或IP  ";
+            this.tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // txtUserblock
+            // 
+            this.txtUserblock.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtUserblock.Location = new System.Drawing.Point(3, 3);
+            this.txtUserblock.Multiline = true;
+            this.txtUserblock.Name = "txtUserblock";
+            this.txtUserblock.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtUserblock.Size = new System.Drawing.Size(494, 346);
+            this.txtUserblock.TabIndex = 1;
             // 
             // chkBypassChinasites
             // 
@@ -387,57 +438,6 @@
             this.panel1.Size = new System.Drawing.Size(528, 10);
             this.panel1.TabIndex = 9;
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.ForeColor = System.Drawing.Color.Brown;
-            this.label4.Location = new System.Drawing.Point(13, 68);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(269, 12);
-            this.label4.TabIndex = 13;
-            this.label4.Text = "*设置的网址或IP，用逗号(,)隔开，可以一行多个";
-            // 
-            // txtUseragent
-            // 
-            this.txtUseragent.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtUseragent.Location = new System.Drawing.Point(3, 3);
-            this.txtUseragent.Multiline = true;
-            this.txtUseragent.Name = "txtUseragent";
-            this.txtUseragent.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtUseragent.Size = new System.Drawing.Size(494, 346);
-            this.txtUseragent.TabIndex = 0;
-            // 
-            // tabPage5
-            // 
-            this.tabPage5.Controls.Add(this.txtUserblock);
-            this.tabPage5.Location = new System.Drawing.Point(4, 22);
-            this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(500, 352);
-            this.tabPage5.TabIndex = 2;
-            this.tabPage5.Text = "  阻止的网址或IP  ";
-            this.tabPage5.UseVisualStyleBackColor = true;
-            // 
-            // txtUserdirect
-            // 
-            this.txtUserdirect.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtUserdirect.Location = new System.Drawing.Point(3, 3);
-            this.txtUserdirect.Multiline = true;
-            this.txtUserdirect.Name = "txtUserdirect";
-            this.txtUserdirect.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtUserdirect.Size = new System.Drawing.Size(494, 346);
-            this.txtUserdirect.TabIndex = 1;
-            // 
-            // txtUserblock
-            // 
-            this.txtUserblock.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtUserblock.Location = new System.Drawing.Point(3, 3);
-            this.txtUserblock.Multiline = true;
-            this.txtUserblock.Name = "txtUserblock";
-            this.txtUserblock.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtUserblock.Size = new System.Drawing.Size(494, 346);
-            this.txtUserblock.TabIndex = 1;
-            // 
             // OptionSettingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -463,9 +463,9 @@
             this.tabPage3.PerformLayout();
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
-            this.panel2.ResumeLayout(false);
             this.tabPage5.ResumeLayout(false);
             this.tabPage5.PerformLayout();
+            this.panel2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

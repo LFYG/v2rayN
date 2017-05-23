@@ -29,37 +29,119 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("");
+            this.notifyMain = new System.Windows.Forms.NotifyIcon(this.components);
+            this.cmsMain = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.menuOpenMain = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.menuServers = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.menuUpdate = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuExit = new System.Windows.Forms.ToolStripMenuItem();
+            this.bgwPing = new System.ComponentModel.BackgroundWorker();
+            this.btnClose = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.txtMsgBox = new System.Windows.Forms.TextBox();
             this.panel3 = new System.Windows.Forms.Panel();
             this.btnReload = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.btnSpeedTest = new System.Windows.Forms.Button();
             this.btnCopyServer = new System.Windows.Forms.Button();
             this.btnAddServer = new System.Windows.Forms.Button();
             this.btnRemoveServer = new System.Windows.Forms.Button();
             this.btnEditServer = new System.Windows.Forms.Button();
             this.btnSetDefault = new System.Windows.Forms.Button();
             this.btnOptionSetting = new System.Windows.Forms.Button();
-            this.btnClose = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lvServers = new System.Windows.Forms.ListView();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.notifyMain = new System.Windows.Forms.NotifyIcon(this.components);
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.menuOpenMain = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.menuUpdate = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuExit = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.cmsMain.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.panel3.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // notifyMain
+            // 
+            this.notifyMain.ContextMenuStrip = this.cmsMain;
+            this.notifyMain.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyMain.Icon")));
+            this.notifyMain.Text = "v2rayN";
+            this.notifyMain.Visible = true;
+            this.notifyMain.MouseClick += new System.Windows.Forms.MouseEventHandler(this.notifyMain_MouseClick);
+            // 
+            // cmsMain
+            // 
+            this.cmsMain.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.cmsMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuOpenMain,
+            this.toolStripSeparator1,
+            this.menuServers,
+            this.toolStripSeparator2,
+            this.menuUpdate,
+            this.menuExit});
+            this.cmsMain.Name = "contextMenuStrip1";
+            this.cmsMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+            this.cmsMain.ShowImageMargin = false;
+            this.cmsMain.Size = new System.Drawing.Size(106, 104);
+            // 
+            // menuOpenMain
+            // 
+            this.menuOpenMain.Name = "menuOpenMain";
+            this.menuOpenMain.Size = new System.Drawing.Size(105, 22);
+            this.menuOpenMain.Text = "打开主窗口";
+            this.menuOpenMain.Click += new System.EventHandler(this.menuOpenMain_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(102, 6);
+            // 
+            // menuServers
+            // 
+            this.menuServers.Name = "menuServers";
+            this.menuServers.Size = new System.Drawing.Size(105, 22);
+            this.menuServers.Text = "服务器";
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(102, 6);
+            // 
+            // menuUpdate
+            // 
+            this.menuUpdate.Name = "menuUpdate";
+            this.menuUpdate.Size = new System.Drawing.Size(105, 22);
+            this.menuUpdate.Text = "检查更新";
+            this.menuUpdate.Click += new System.EventHandler(this.menuUpdate_Click);
+            // 
+            // menuExit
+            // 
+            this.menuExit.Name = "menuExit";
+            this.menuExit.Size = new System.Drawing.Size(105, 22);
+            this.menuExit.Text = "退出";
+            this.menuExit.Click += new System.EventHandler(this.menuExit_Click);
+            // 
+            // bgwPing
+            // 
+            this.bgwPing.WorkerReportsProgress = true;
+            this.bgwPing.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgwPing_DoWork);
+            this.bgwPing.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.bgwPing_ProgressChanged);
+            // 
+            // btnClose
+            // 
+            this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnClose.Location = new System.Drawing.Point(790, 12);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(91, 37);
+            this.btnClose.TabIndex = 0;
+            this.btnClose.Text = "最小化(&C)";
+            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // groupBox2
             // 
@@ -113,6 +195,7 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.btnSpeedTest);
             this.groupBox3.Controls.Add(this.btnCopyServer);
             this.groupBox3.Controls.Add(this.btnAddServer);
             this.groupBox3.Controls.Add(this.btnRemoveServer);
@@ -121,10 +204,20 @@
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Left;
             this.groupBox3.Location = new System.Drawing.Point(0, 0);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(442, 57);
+            this.groupBox3.Size = new System.Drawing.Size(511, 57);
             this.groupBox3.TabIndex = 6;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "服务器";
+            // 
+            // btnSpeedTest
+            // 
+            this.btnSpeedTest.Location = new System.Drawing.Point(428, 19);
+            this.btnSpeedTest.Name = "btnSpeedTest";
+            this.btnSpeedTest.Size = new System.Drawing.Size(75, 23);
+            this.btnSpeedTest.TabIndex = 8;
+            this.btnSpeedTest.Text = "Ping(&P)";
+            this.btnSpeedTest.UseVisualStyleBackColor = true;
+            this.btnSpeedTest.Click += new System.EventHandler(this.btnSpeedTest_Click);
             // 
             // btnCopyServer
             // 
@@ -179,25 +272,13 @@
             // 
             // btnOptionSetting
             // 
-            this.btnOptionSetting.Location = new System.Drawing.Point(463, 19);
+            this.btnOptionSetting.Location = new System.Drawing.Point(530, 19);
             this.btnOptionSetting.Name = "btnOptionSetting";
             this.btnOptionSetting.Size = new System.Drawing.Size(83, 23);
             this.btnOptionSetting.TabIndex = 3;
             this.btnOptionSetting.Text = "参数设置(&O)";
             this.btnOptionSetting.UseVisualStyleBackColor = true;
             this.btnOptionSetting.Click += new System.EventHandler(this.btnOptionSetting_Click);
-            // 
-            // btnClose
-            // 
-            this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnClose.Location = new System.Drawing.Point(790, 12);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(91, 37);
-            this.btnClose.TabIndex = 0;
-            this.btnClose.Text = "最小化(&C)";
-            this.btnClose.UseVisualStyleBackColor = true;
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // groupBox1
             // 
@@ -218,7 +299,7 @@
             this.lvServers.GridLines = true;
             this.lvServers.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.lvServers.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1});
+            listViewItem2});
             this.lvServers.Location = new System.Drawing.Point(3, 17);
             this.lvServers.Name = "lvServers";
             this.lvServers.ShowGroups = false;
@@ -237,50 +318,6 @@
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.Size = new System.Drawing.Size(887, 260);
             this.dataGridView1.TabIndex = 0;
-            // 
-            // notifyMain
-            // 
-            this.notifyMain.ContextMenuStrip = this.contextMenuStrip1;
-            this.notifyMain.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyMain.Icon")));
-            this.notifyMain.Text = "v2rayN";
-            this.notifyMain.Visible = true;
-            this.notifyMain.MouseClick += new System.Windows.Forms.MouseEventHandler(this.notifyMain_MouseClick);
-            // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuOpenMain,
-            this.toolStripSeparator1,
-            this.menuUpdate,
-            this.menuExit});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(131, 76);
-            // 
-            // menuOpenMain
-            // 
-            this.menuOpenMain.Name = "menuOpenMain";
-            this.menuOpenMain.Size = new System.Drawing.Size(130, 22);
-            this.menuOpenMain.Text = "打开主窗口";
-            this.menuOpenMain.Click += new System.EventHandler(this.menuOpenMain_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(127, 6);
-            // 
-            // menuUpdate
-            // 
-            this.menuUpdate.Name = "menuUpdate";
-            this.menuUpdate.Size = new System.Drawing.Size(130, 22);
-            this.menuUpdate.Text = "检查更新";
-            this.menuUpdate.Click += new System.EventHandler(this.menuUpdate_Click);
-            // 
-            // menuExit
-            // 
-            this.menuExit.Name = "menuExit";
-            this.menuExit.Size = new System.Drawing.Size(130, 22);
-            this.menuExit.Text = "退出";
-            this.menuExit.Click += new System.EventHandler(this.menuExit_Click);
             // 
             // panel1
             // 
@@ -308,13 +345,13 @@
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.Shown += new System.EventHandler(this.MainForm_Shown);
             this.Resize += new System.EventHandler(this.MainForm_Resize);
+            this.cmsMain.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -336,13 +373,17 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Button btnCopyServer;
         private System.Windows.Forms.NotifyIcon notifyMain;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ContextMenuStrip cmsMain;
         private System.Windows.Forms.ToolStripMenuItem menuOpenMain;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem menuExit;
         private System.Windows.Forms.Button btnReload;
         private System.Windows.Forms.ToolStripMenuItem menuUpdate;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.ToolStripMenuItem menuServers;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.Button btnSpeedTest;
+        private System.ComponentModel.BackgroundWorker bgwPing;
     }
 }
 

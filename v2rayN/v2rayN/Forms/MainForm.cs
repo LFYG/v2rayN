@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Reflection;
 using System.Windows.Forms;
 using v2rayN.Handler;
 using v2rayN.Mode;
@@ -16,6 +20,8 @@ namespace v2rayN.Forms
             InitializeComponent();
             this.ShowInTaskbar = false;
             this.WindowState = FormWindowState.Minimized;
+            this.Text = Utils.GetVersion();
+
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -28,7 +34,7 @@ namespace v2rayN.Forms
         private void MainForm_Shown(object sender, EventArgs e)
         {
             InitServersView();
-            RefreshServersView();
+            RefreshServers();
 
             LoadV2ray();
         }
@@ -54,10 +60,19 @@ namespace v2rayN.Forms
 
         #endregion
 
-        #region listview 显示
+        #region 显示服务器 listview 和 menu
 
         /// <summary>
-        /// 初始化服务器显示
+        /// 刷新服务器
+        /// </summary>
+        private void RefreshServers()
+        {
+            RefreshServersView();
+            RefreshServersMenu();
+        }
+
+        /// <summary>
+        /// 初始化服务器列表
         /// </summary>
         private void InitServersView()
         {
@@ -71,17 +86,19 @@ namespace v2rayN.Forms
             lvServers.HeaderStyle = ColumnHeaderStyle.Nonclickable;
 
             lvServers.Columns.Add("默认", 40, HorizontalAlignment.Center);
+            lvServers.Columns.Add("别名(remarks)", 120, HorizontalAlignment.Left);
             lvServers.Columns.Add("地址(address)", 110, HorizontalAlignment.Left);
             lvServers.Columns.Add("端口(port)", 80, HorizontalAlignment.Left);
             lvServers.Columns.Add("用户ID(id)", 110, HorizontalAlignment.Left);
             lvServers.Columns.Add("额外ID(alterId)", 110, HorizontalAlignment.Left);
             lvServers.Columns.Add("加密方式(security)", 120, HorizontalAlignment.Left);
             lvServers.Columns.Add("传输协议(network)", 120, HorizontalAlignment.Left);
-            lvServers.Columns.Add("备注(remarks)", 150, HorizontalAlignment.Left);
+            lvServers.Columns.Add("延迟(Latency)", 100, HorizontalAlignment.Left);
+
         }
 
         /// <summary>
-        /// 刷新服务器
+        /// 刷新服务器列表
         /// </summary>
         private void RefreshServersView()
         {
@@ -98,14 +115,51 @@ namespace v2rayN.Forms
                 VmessItem item = config.vmess[k];
                 ListViewItem lvItem = new ListViewItem(new string[] {  
                                                 def,
+                                                item.remarks,
                                                 item.address,
                                                 item.port.ToString(),
                                                 item.id,
                                                 item.alterId.ToString(),
                                                 item.security,
                                                 item.network,
-                                                item.remarks});
+                                                ""});
                 lvServers.Items.Add(lvItem);
+            }
+
+        }
+
+        /// <summary>
+        /// 刷新托盘服务器菜单
+        /// </summary>
+        private void RefreshServersMenu()
+        {
+            menuServers.DropDownItems.Clear();
+
+            for (int k = 0; k < config.vmess.Count; k++)
+            {
+                VmessItem item = config.vmess[k];
+                string name = string.Format("{0}({1}:{2})", item.remarks, item.address, item.port);
+
+                ToolStripMenuItem ts = new ToolStripMenuItem(name);
+                ts.Tag = k;
+                if (config.index.Equals(k))
+                {
+                    ts.Checked = true;
+                }
+                ts.Click += new EventHandler(ts_Click);
+                menuServers.DropDownItems.Add(ts);
+            }
+        }
+        private void ts_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                ToolStripItem ts = (ToolStripItem)sender;
+                int index = Convert.ToInt32(ts.Tag);
+                SetDefaultServer(index);
+            }
+            catch
+            {
             }
         }
 
@@ -146,7 +200,7 @@ namespace v2rayN.Forms
             if (fm.ShowDialog() == DialogResult.OK)
             {
                 //刷新
-                RefreshServersView();
+                RefreshServers();
                 LoadV2ray();
             }
         }
@@ -158,7 +212,7 @@ namespace v2rayN.Forms
             if (fm.ShowDialog() == DialogResult.OK)
             {
                 //刷新
-                RefreshServersView();
+                RefreshServers();
                 LoadV2ray();
             }
         }
@@ -174,7 +228,7 @@ namespace v2rayN.Forms
             if (fm.ShowDialog() == DialogResult.OK)
             {
                 //刷新
-                RefreshServersView();
+                RefreshServers();
                 LoadV2ray();
             }
         }
@@ -194,7 +248,7 @@ namespace v2rayN.Forms
             if (ConfigHandler.RemoveServer(ref config, index) == 0)
             {
                 //刷新
-                RefreshServersView();
+                RefreshServers();
                 LoadV2ray();
             }
         }
@@ -211,10 +265,9 @@ namespace v2rayN.Forms
             if (ConfigHandler.CopyServer(ref config, index) == 0)
             {
                 //刷新
-                RefreshServersView();
+                RefreshServers();
             }
         }
-
 
         private void btnSetDefault_Click(object sender, EventArgs e)
         {
@@ -224,12 +277,33 @@ namespace v2rayN.Forms
                 return;
             }
             int index = lvServers.SelectedIndices[0];
+            SetDefaultServer(index);
+        }
+
+        private void btnSpeedTest_Click(object sender, EventArgs e)
+        {
+            bgwPing.RunWorkerAsync();
+        }
+
+        /// <summary>
+        /// 设置默认服务器
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        private int SetDefaultServer(int index)
+        {
+            if (index < 0)
+            {
+                UI.Show("请先选择服务器");
+                return -1;
+            }
             if (ConfigHandler.SetDefaultServer(ref config, index) == 0)
             {
                 //刷新
-                RefreshServersView();
+                RefreshServers();
                 LoadV2ray();
             }
+            return 0;
         }
 
         private void btnReload_Click(object sender, EventArgs e)
@@ -346,8 +420,7 @@ namespace v2rayN.Forms
 
         private void menuUpdate_Click(object sender, EventArgs e)
         {
-            string url = @"https://github.com/v2ray/v2rayN/releases";
-            System.Diagnostics.Process.Start(url);
+            System.Diagnostics.Process.Start(Global.UpdateUrl);
         }
 
         private void ShowForm()
@@ -363,6 +436,37 @@ namespace v2rayN.Forms
             this.WindowState = FormWindowState.Minimized;
             this.Hide();
             this.notifyMain.Visible = true;
+        }
+        #endregion
+
+        #region 后台测速
+
+        private void bgwPing_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {
+            try
+            {
+                for (int k = 0; k < config.vmess.Count; k++)
+                {
+                    long time = Utils.Ping(config.vmess[k].address);
+                    bgwPing.ReportProgress(k, string.Format("{0}ms", time));
+                }
+            }
+            catch
+            {
+            }
+        }
+        private void bgwPing_ProgressChanged(object sender, System.ComponentModel.ProgressChangedEventArgs e)
+        {
+            try
+            {
+                int k = e.ProgressPercentage;
+                string time = Convert.ToString(e.UserState);
+                lvServers.Items[k].SubItems[lvServers.Items[k].SubItems.Count - 1].Text = time;
+
+            }
+            catch
+            {
+            }
         }
 
         #endregion
