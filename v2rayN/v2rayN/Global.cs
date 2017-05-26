@@ -25,17 +25,21 @@ namespace v2rayN
         public const string v2rayConfigFileName = "config.json";
 
         /// <summary>
-        /// v2ray配置样例文件名
+        /// v2ray客户端配置样例文件名
         /// </summary>
-        public const string v2raySampleFileName = "v2rayN.Mode.SampleConfig.txt";
+        public const string v2raySampleClient = "v2rayN.Sample.SampleClientConfig.txt";
+        /// <summary>
+        /// v2ray服务端配置样例文件名
+        /// </summary>
+        public const string v2raySampleServer = "v2rayN.Sample.SampleServerConfig.txt";
         /// <summary>
         /// v2ray配置Httprequest文件名
         /// </summary>
-        public const string v2raySampleHttprequestFileName = "v2rayN.Mode.SampleHttprequest.txt";
+        public const string v2raySampleHttprequestFileName = "v2rayN.Sample.SampleHttprequest.txt";
         /// <summary>
         /// v2ray配置Httpresponse文件名
         /// </summary>
-        public const string v2raySampleHttpresponseFileName = "v2rayN.Mode.SampleHttpresponse.txt";
+        public const string v2raySampleHttpresponseFileName = "v2rayN.Sample.SampleHttpresponse.txt";
 
 
         /// <summary>

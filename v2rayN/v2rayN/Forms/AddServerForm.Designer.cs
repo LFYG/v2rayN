@@ -30,6 +30,7 @@
         {
             this.btnClose = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label13 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label12 = new System.Windows.Forms.Label();
             this.txtRequestHost = new System.Windows.Forms.TextBox();
@@ -53,13 +54,16 @@
             this.txtAddress = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.btnImport = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
+            this.menuServer = new System.Windows.Forms.MenuStrip();
+            this.MenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuItemImportClient = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuItemImportServer = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.label13 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.menuServer.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnClose
@@ -94,12 +98,21 @@
             this.groupBox1.Controls.Add(this.txtAddress);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox1.Location = new System.Drawing.Point(0, 10);
+            this.groupBox1.Location = new System.Drawing.Point(0, 34);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(515, 347);
+            this.groupBox1.Size = new System.Drawing.Size(515, 323);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "服务器";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(285, 203);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(113, 12);
+            this.label13.TabIndex = 22;
+            this.label13.Text = "*手填,方便识别管理";
             // 
             // groupBox2
             // 
@@ -109,7 +122,7 @@
             this.groupBox2.Controls.Add(this.label10);
             this.groupBox2.Controls.Add(this.cmbHeaderType);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.groupBox2.Location = new System.Drawing.Point(3, 249);
+            this.groupBox2.Location = new System.Drawing.Point(3, 225);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(509, 95);
             this.groupBox2.TabIndex = 21;
@@ -310,7 +323,6 @@
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.btnImport);
             this.panel2.Controls.Add(this.btnClose);
             this.panel2.Controls.Add(this.btnOK);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -318,16 +330,6 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(515, 60);
             this.panel2.TabIndex = 7;
-            // 
-            // btnImport
-            // 
-            this.btnImport.Location = new System.Drawing.Point(20, 17);
-            this.btnImport.Name = "btnImport";
-            this.btnImport.Size = new System.Drawing.Size(75, 23);
-            this.btnImport.TabIndex = 6;
-            this.btnImport.Text = "导入(&I)";
-            this.btnImport.UseVisualStyleBackColor = true;
-            this.btnImport.Click += new System.EventHandler(this.btnImport_Click);
             // 
             // btnOK
             // 
@@ -339,22 +341,45 @@
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
+            // menuServer
+            // 
+            this.menuServer.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MenuItem1});
+            this.menuServer.Location = new System.Drawing.Point(0, 0);
+            this.menuServer.Name = "menuServer";
+            this.menuServer.Size = new System.Drawing.Size(515, 24);
+            this.menuServer.TabIndex = 8;
+            // 
+            // MenuItem1
+            // 
+            this.MenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MenuItemImportClient,
+            this.MenuItemImportServer});
+            this.MenuItem1.Name = "MenuItem1";
+            this.MenuItem1.Size = new System.Drawing.Size(89, 20);
+            this.MenuItem1.Text = "导入配置文件";
+            // 
+            // MenuItemImportClient
+            // 
+            this.MenuItemImportClient.Name = "MenuItemImportClient";
+            this.MenuItemImportClient.Size = new System.Drawing.Size(154, 22);
+            this.MenuItemImportClient.Text = "导入客户端配置";
+            this.MenuItemImportClient.Click += new System.EventHandler(this.MenuItemImportClient_Click);
+            // 
+            // MenuItemImportServer
+            // 
+            this.MenuItemImportServer.Name = "MenuItemImportServer";
+            this.MenuItemImportServer.Size = new System.Drawing.Size(154, 22);
+            this.MenuItemImportServer.Text = "导入服务端配置";
+            this.MenuItemImportServer.Click += new System.EventHandler(this.MenuItemImportServer_Click);
+            // 
             // panel1
             // 
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Location = new System.Drawing.Point(0, 24);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(515, 10);
             this.panel1.TabIndex = 6;
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(285, 203);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(113, 12);
-            this.label13.TabIndex = 22;
-            this.label13.Text = "*手填,方便识别管理";
             // 
             // AddServerForm
             // 
@@ -365,6 +390,7 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
+            this.Controls.Add(this.menuServer);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "AddServerForm";
             this.Text = "编辑或添加服务器";
@@ -374,7 +400,10 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.panel2.ResumeLayout(false);
+            this.menuServer.ResumeLayout(false);
+            this.menuServer.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -401,7 +430,6 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Button btnImport;
         private System.Windows.Forms.TextBox txtRequestHost;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
@@ -409,5 +437,9 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.MenuStrip menuServer;
+        private System.Windows.Forms.ToolStripMenuItem MenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem MenuItemImportClient;
+        private System.Windows.Forms.ToolStripMenuItem MenuItemImportServer;
     }
 }

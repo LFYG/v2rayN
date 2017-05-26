@@ -20,6 +20,7 @@ namespace v2rayN.Handler
     /// </summary>
     class V2rayHandler
     {
+        private static string v2rayConfigRes = Global.v2rayConfigFileName;
         private List<string> lstV2ray;
         public event ProcessDelegate ProcessEvent;
 
@@ -38,7 +39,8 @@ namespace v2rayN.Handler
             if (Global.reloadV2ray)
             {
                 string msg = string.Empty;
-                if (V2rayConfigHandler.GenerateConfigFile(config, out msg) != 0)
+                string fileName = Utils.GetPath(v2rayConfigRes);
+                if (V2rayConfigHandler.GenerateClientConfig(config, fileName, out msg) != 0)
                 {
                     ShowMsg(false, msg);
                 }

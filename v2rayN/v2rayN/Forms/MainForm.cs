@@ -85,7 +85,7 @@ namespace v2rayN.Forms
             lvServers.MultiSelect = false;
             lvServers.HeaderStyle = ColumnHeaderStyle.Nonclickable;
 
-            lvServers.Columns.Add("默认", 40, HorizontalAlignment.Center);
+            lvServers.Columns.Add("活动", 40, HorizontalAlignment.Center);
             lvServers.Columns.Add("别名(remarks)", 120, HorizontalAlignment.Left);
             lvServers.Columns.Add("地址(address)", 110, HorizontalAlignment.Left);
             lvServers.Columns.Add("端口(port)", 80, HorizontalAlignment.Left);
@@ -194,9 +194,15 @@ namespace v2rayN.Forms
 
         #region 功能按钮
 
-        private void btnOptionSetting_Click(object sender, EventArgs e)
+        private void lvServers_DoubleClick(object sender, EventArgs e)
         {
-            OptionSettingForm fm = new OptionSettingForm();
+            int index = GetLvSelectedIndex();
+            if (index < 0)
+            {
+                return;
+            }
+            AddServerForm fm = new AddServerForm();
+            fm.EditIndex = index;
             if (fm.ShowDialog() == DialogResult.OK)
             {
                 //刷新
@@ -205,7 +211,8 @@ namespace v2rayN.Forms
             }
         }
 
-        private void btnAddServer_Click(object sender, EventArgs e)
+
+        private void menuAddServer_Click(object sender, EventArgs e)
         {
             AddServerForm fm = new AddServerForm();
             fm.EditIndex = -1;
@@ -216,35 +223,18 @@ namespace v2rayN.Forms
                 LoadV2ray();
             }
         }
-        private void btnEditServer_Click(object sender, EventArgs e)
+
+        private void menuRemoveServer_Click(object sender, EventArgs e)
         {
-            if (lvServers.SelectedIndices.Count <= 0)
+            int index = GetLvSelectedIndex();
+            if (index < 0)
             {
-                UI.Show("请先选择服务器");
-                return;
-            }
-            AddServerForm fm = new AddServerForm();
-            fm.EditIndex = lvServers.SelectedIndices[0];
-            if (fm.ShowDialog() == DialogResult.OK)
-            {
-                //刷新
-                RefreshServers();
-                LoadV2ray();
-            }
-        }
-        private void btnRemoveServer_Click(object sender, EventArgs e)
-        {
-            if (lvServers.SelectedIndices.Count <= 0)
-            {
-                UI.Show("请先选择服务器");
                 return;
             }
             if (UI.ShowYesNo("是否确定移除服务器?") == DialogResult.No)
             {
                 return;
             }
-
-            int index = lvServers.SelectedIndices[0];
             if (ConfigHandler.RemoveServer(ref config, index) == 0)
             {
                 //刷新
@@ -253,15 +243,13 @@ namespace v2rayN.Forms
             }
         }
 
-        private void btnCopyServer_Click(object sender, EventArgs e)
+        private void menuCopyServer_Click(object sender, EventArgs e)
         {
-            if (lvServers.SelectedIndices.Count <= 0)
+            int index = GetLvSelectedIndex();
+            if (index < 0)
             {
-                UI.Show("请先选择服务器");
                 return;
             }
-
-            int index = lvServers.SelectedIndices[0];
             if (ConfigHandler.CopyServer(ref config, index) == 0)
             {
                 //刷新
@@ -269,24 +257,114 @@ namespace v2rayN.Forms
             }
         }
 
-        private void btnSetDefault_Click(object sender, EventArgs e)
+        private void menuSetDefaultServer_Click(object sender, EventArgs e)
         {
-            if (lvServers.SelectedIndices.Count <= 0)
+            int index = GetLvSelectedIndex();
+            if (index < 0)
             {
-                UI.Show("请先选择服务器");
                 return;
             }
-            int index = lvServers.SelectedIndices[0];
             SetDefaultServer(index);
         }
 
-        private void btnSpeedTest_Click(object sender, EventArgs e)
+        private void menuPingServer_Click(object sender, EventArgs e)
         {
             bgwPing.RunWorkerAsync();
         }
 
+
+        private void menuExport2ClientConfig_Click(object sender, EventArgs e)
+        {
+            int index = GetLvSelectedIndex();
+            if (index < 0)
+            {
+                return;
+            }
+
+            SaveFileDialog fileDialog = new SaveFileDialog();
+            fileDialog.Filter = "Config|*.json";
+            fileDialog.FilterIndex = 2;
+            fileDialog.RestoreDirectory = true;
+            if (fileDialog.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+            string fileName = fileDialog.FileName;
+            if (Utils.IsNullOrEmpty(fileName))
+            {
+                return;
+            }
+            Config configCopy = Utils.DeepCopy<Config>(config);
+            configCopy.index = index;
+            string msg;
+            if (V2rayConfigHandler.Export2ClientConfig(configCopy, fileName, out msg) != 0)
+            {
+                UI.Show(msg);
+            }
+            else
+            {
+                UI.Show(string.Format("客户端配置文件保存在:{0}", fileName));
+            }
+        }
+
+        private void menuExport2ServerConfig_Click(object sender, EventArgs e)
+        {
+            int index = GetLvSelectedIndex();
+            if (index < 0)
+            {
+                return;
+            }
+
+            SaveFileDialog fileDialog = new SaveFileDialog();
+            fileDialog.Filter = "Config|*.json";
+            fileDialog.FilterIndex = 2;
+            fileDialog.RestoreDirectory = true;
+            if (fileDialog.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+            string fileName = fileDialog.FileName;
+            if (Utils.IsNullOrEmpty(fileName))
+            {
+                return;
+            }
+            Config configCopy = Utils.DeepCopy<Config>(config);
+            configCopy.index = index;
+            string msg;
+            if (V2rayConfigHandler.Export2ServerConfig(configCopy, fileName, out msg) != 0)
+            {
+                UI.Show(msg);
+            }
+            else
+            {
+                UI.Show(string.Format("服务端配置文件保存在:{0}", fileName));
+            }
+        }
+
+        private void tsbOptionSetting_Click(object sender, EventArgs e)
+        {
+            OptionSettingForm fm = new OptionSettingForm();
+            if (fm.ShowDialog() == DialogResult.OK)
+            {
+                //刷新
+                RefreshServers();
+                LoadV2ray();
+            }
+        }
+
+        private void tsbReload_Click(object sender, EventArgs e)
+        {
+            Global.reloadV2ray = true;
+            LoadV2ray();
+        }
+
+        private void tsbClose_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+        }
+
         /// <summary>
-        /// 设置默认服务器
+        /// 设置活动服务器
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
@@ -306,22 +384,30 @@ namespace v2rayN.Forms
             return 0;
         }
 
-        private void btnReload_Click(object sender, EventArgs e)
+        /// <summary>
+        /// 取得ListView选中的行
+        /// </summary>
+        /// <returns></returns>
+        private int GetLvSelectedIndex()
         {
-            Global.reloadV2ray = true;
-            LoadV2ray();
+            int index = -1;
+            try
+            {
+                if (lvServers.SelectedIndices.Count <= 0)
+                {
+                    UI.Show("请先选择服务器");
+                    return index;
+                }
+
+                index = lvServers.SelectedIndices[0];
+                return index;
+            }
+            catch
+            {
+                return index;
+            }
         }
 
-        private void btnClose_Click(object sender, EventArgs e)
-        {
-            this.WindowState = FormWindowState.Minimized;
-            //this.Close();
-        }
-
-        private void lvServers_DoubleClick(object sender, EventArgs e)
-        {
-            btnEditServer_Click(null, null);
-        }
         #endregion
 
 
@@ -470,5 +556,8 @@ namespace v2rayN.Forms
         }
 
         #endregion
+
+
+
     }
 }

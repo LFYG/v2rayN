@@ -23,7 +23,7 @@ namespace v2rayN.Mode
         /// <summary>
         /// 额外的传入连接配置
         /// </summary>
-        public List<Inbound> inboundDetour { get; set; }
+        public List<InboundDetourItem> inboundDetour { get; set; }
         /// <summary>
         /// 额外的传出连接配置
         /// </summary>
@@ -54,22 +54,6 @@ namespace v2rayN.Mode
         public string loglevel { get; set; }
     }
 
-    public class Inboundsettings
-    {
-        /// <summary>
-        /// 
-        /// </summary>
-        public string auth { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public bool udp { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public string ip { get; set; }
-    }
-
     public class Inbound
     {
         /// <summary>
@@ -88,6 +72,32 @@ namespace v2rayN.Mode
         /// 
         /// </summary>
         public Inboundsettings settings { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public StreamSettings streamSettings { get; set; }
+    }
+
+    public class Inboundsettings
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        public string auth { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool udp { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string ip { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public List<UsersItem> clients { get; set; }
     }
 
     public class UsersItem
@@ -104,38 +114,6 @@ namespace v2rayN.Mode
         /// 
         /// </summary>
         public string security { get; set; }
-    }
-
-    public class VnextItem
-    {
-        /// <summary>
-        /// 
-        /// </summary>
-        public string address { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public int port { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public List<UsersItem> users { get; set; }
-    }
-
-    public class Outboundsettings
-    {
-        /// <summary>
-        /// 
-        /// </summary>
-        public List<VnextItem> vnext { get; set; }
-    }
-
-    public class Mux
-    {
-        /// <summary>
-        /// 
-        /// </summary>
-        public bool enabled { get; set; }
     }
 
     public class Outbound
@@ -162,20 +140,56 @@ namespace v2rayN.Mode
         public Mux mux { get; set; }
     }
 
-    public class OutboundDetoursettings
+    public class Outboundsettings
     {
         /// <summary>
         /// 
         /// </summary>
-        public Response response { get; set; }
+        public List<VnextItem> vnext { get; set; }
     }
 
-    public class Response
+    public class VnextItem
     {
         /// <summary>
         /// 
         /// </summary>
-        public string type { get; set; }
+        public string address { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public int port { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public List<UsersItem> users { get; set; }
+    }
+
+    public class Mux
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool enabled { get; set; }
+    }
+
+    public class InboundDetourItem
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        public string port { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string listen { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string protocol { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public Inboundsettings settings { get; set; }
     }
 
     public class OutboundDetourItem
@@ -192,6 +206,23 @@ namespace v2rayN.Mode
         /// 
         /// </summary>
         public string tag { get; set; }
+    }
+
+    
+    public class OutboundDetoursettings
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        public Response response { get; set; }
+    }
+
+    public class Response
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        public string type { get; set; }
     }
 
     public class Dns

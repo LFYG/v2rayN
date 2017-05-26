@@ -132,7 +132,7 @@ namespace v2rayN.Handler
             config.vmess.RemoveAt(index);
 
 
-            //移除的是默认的
+            //移除的是活动的
             if (config.index.Equals(index))
             {
                 if (config.vmess.Count > 0)
@@ -145,7 +145,7 @@ namespace v2rayN.Handler
                 }
                 Global.reloadV2ray = true;
             }
-            else if (index < config.index)//移除默认之前的
+            else if (index < config.index)//移除活动之前的
             {
                 config.index--;
                 Global.reloadV2ray = true;
@@ -187,7 +187,7 @@ namespace v2rayN.Handler
         }
 
         /// <summary>
-        /// 设置默认服务器
+        /// 设置活动服务器
         /// </summary>
         /// <param name="config"></param>
         /// <param name="index"></param>

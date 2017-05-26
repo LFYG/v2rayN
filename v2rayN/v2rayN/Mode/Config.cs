@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace v2rayN.Mode
 {
     /// <summary>
     /// 本软件配置文件实体类
     /// </summary>
+    [Serializable]
     public class Config
     {
         /// <summary>
@@ -23,7 +25,7 @@ namespace v2rayN.Mode
         public string loglevel { get; set; }
 
         /// <summary>
-        /// 默认配置序号
+        /// 活动配置序号
         /// </summary>
         public int index { get; set; }
 
@@ -144,8 +146,10 @@ namespace v2rayN.Mode
 
 
         #endregion
-    }
 
+    }
+    
+    [Serializable]
     public class VmessItem
     {
         /// <summary>
@@ -189,7 +193,7 @@ namespace v2rayN.Mode
 
     }
 
-
+    [Serializable]
     public class InItem
     {
         /// <summary>

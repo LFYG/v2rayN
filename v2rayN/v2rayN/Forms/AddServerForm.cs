@@ -126,7 +126,30 @@ namespace v2rayN.Forms
             this.DialogResult = DialogResult.Cancel;
         }
 
-        private void btnImport_Click(object sender, EventArgs e)
+
+        #region 导入客户端/服务端配置
+
+        /// <summary>
+        /// 导入客户端
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MenuItemImportClient_Click(object sender, EventArgs e)
+        {
+            MenuItemImport(1);
+        }
+
+        /// <summary>
+        /// 导入服务端
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MenuItemImportServer_Click(object sender, EventArgs e)
+        {
+            MenuItemImport(2);
+        }
+
+        private void MenuItemImport(int type)
         {
             ClearServer();
 
@@ -142,93 +165,33 @@ namespace v2rayN.Forms
             {
                 return;
             }
-
-            //载入配置文件 
-            string result = Utils.LoadResource(fileName);
-            if (Utils.IsNullOrEmpty(result))
+            string msg;
+            VmessItem vmessItem;
+            if (type.Equals(1))
             {
-                UI.Show("读取配置文件失败");
+                vmessItem = V2rayConfigHandler.ImportFromClientConfig(fileName, out msg);
+            }
+            else
+            {
+                vmessItem = V2rayConfigHandler.ImportFromServerConfig(fileName, out msg);
+            }
+            if (vmessItem == null)
+            {
+                UI.Show(msg);
                 return;
             }
 
-            //转成Json
-            V2rayConfig v2rayConfig = Utils.FromJson<V2rayConfig>(result);
-            if (v2rayConfig == null)
-            {
-                UI.Show("转换配置文件失败");
-                return;
-            }
-
-            try
-            {
-                if (v2rayConfig.outbound == null
-                    || Utils.IsNullOrEmpty(v2rayConfig.outbound.protocol)
-                    || v2rayConfig.outbound.protocol != "vmess"
-                    || v2rayConfig.outbound.settings == null
-                    || v2rayConfig.outbound.settings.vnext == null
-                    || v2rayConfig.outbound.settings.vnext.Count <= 0
-                    || v2rayConfig.outbound.settings.vnext[0].users == null
-                    || v2rayConfig.outbound.settings.vnext[0].users.Count <= 0)
-                {
-                    UI.Show("不是正确的客户端配置文件，请检查");
-                    return;
-                }
-
-                txtAddress.Text = v2rayConfig.outbound.settings.vnext[0].address;
-                txtPort.Text = v2rayConfig.outbound.settings.vnext[0].port.ToString();
-                txtId.Text = v2rayConfig.outbound.settings.vnext[0].users[0].id;
-                txtAlterId.Text = v2rayConfig.outbound.settings.vnext[0].users[0].alterId.ToString();
-
-                txtRemarks.Text = string.Format("import@{0}", DateTime.Now.ToShortDateString());
-
-                //tcp or kcp
-                if (v2rayConfig.outbound.streamSettings != null
-                    && v2rayConfig.outbound.streamSettings.network != null
-                    && !Utils.IsNullOrEmpty(v2rayConfig.outbound.streamSettings.network))
-                {
-                    cmbNetwork.Text = v2rayConfig.outbound.streamSettings.network;
-                }
-
-                //tcp伪装http
-                if (v2rayConfig.outbound.streamSettings != null
-                    && v2rayConfig.outbound.streamSettings.tcpSettings != null
-                    && v2rayConfig.outbound.streamSettings.tcpSettings.header != null
-                    && !Utils.IsNullOrEmpty(v2rayConfig.outbound.streamSettings.tcpSettings.header.type))
-                {
-                    if (v2rayConfig.outbound.streamSettings.tcpSettings.header.type.Equals(Global.TcpHeaderHttp))
-                    {
-                        cmbHeaderType.Text = v2rayConfig.outbound.streamSettings.tcpSettings.header.type;
-                        string request = Convert.ToString(v2rayConfig.outbound.streamSettings.tcpSettings.header.request);
-                        if (!Utils.IsNullOrEmpty(request))
-                        {
-                            V2rayTcpRequest v2rayTcpRequest = JsonConvert.DeserializeObject<V2rayTcpRequest>(request);
-                            if (v2rayTcpRequest != null
-                                && v2rayTcpRequest.headers != null
-                                && v2rayTcpRequest.headers.Host != null
-                                && v2rayTcpRequest.headers.Host.Count > 0)
-                            {
-                                txtRequestHost.Text = v2rayTcpRequest.headers.Host[0];
-                            }
-                        }
-                    }
-                }
-                //kcp伪装
-                if (v2rayConfig.outbound.streamSettings != null
-                    && v2rayConfig.outbound.streamSettings.kcpsettings != null
-                    && v2rayConfig.outbound.streamSettings.kcpsettings.header != null
-                    && !Utils.IsNullOrEmpty(v2rayConfig.outbound.streamSettings.kcpsettings.header.type))
-                {
-                    cmbHeaderType.Text = v2rayConfig.outbound.streamSettings.kcpsettings.header.type;
-                }
-
-            }
-            catch
-            {
-                UI.Show("异常，不是正确的客户端配置文件，请检查");
-                return;
-            }
-
+            txtAddress.Text = vmessItem.address;
+            txtPort.Text = vmessItem.port.ToString();
+            txtId.Text = vmessItem.id;
+            txtAlterId.Text = vmessItem.alterId.ToString();
+            txtRemarks.Text = vmessItem.remarks;
+            cmbNetwork.Text = vmessItem.network;
+            cmbHeaderType.Text = vmessItem.headerType;
+            txtRequestHost.Text = vmessItem.requestHost;
         }
 
+        #endregion
+         
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using v2rayN.Mode;
 
 namespace v2rayN.Handler
@@ -8,16 +9,19 @@ namespace v2rayN.Handler
     /// </summary>
     class V2rayConfigHandler
     {
-        private static string v2rayConfigRes = Global.v2rayConfigFileName;
-        private static string SampleRes = Global.v2raySampleFileName;
+        private static string SampleClient = Global.v2raySampleClient;
+        private static string SampleServer = Global.v2raySampleServer;
+
+        #region 生成客户端配置
 
         /// <summary>
-        /// 生成v2ray的配置文件
+        /// 生成v2ray的客户端配置文件
         /// </summary>
         /// <param name="config"></param>
+        /// <param name="fileName"></param>
         /// <param name="msg"></param>
         /// <returns></returns>
-        public static int GenerateConfigFile(Config config, out string msg)
+        public static int GenerateClientConfig(Config config, string fileName, out string msg)
         {
             msg = string.Empty;
 
@@ -36,8 +40,8 @@ namespace v2rayN.Handler
 
                 msg = "初始化配置";
 
-                //取得默认配置（取得V2raySampleConfig
-                string result = Utils.GetEmbedText(SampleRes);
+                //取得默认配置
+                string result = Utils.GetEmbedText(SampleClient);
                 if (Utils.IsNullOrEmpty(result))
                 {
                     msg = "取得默认配置失败";
@@ -48,11 +52,13 @@ namespace v2rayN.Handler
                 V2rayConfig v2rayConfig = Utils.FromJson<V2rayConfig>(result);
                 if (v2rayConfig == null)
                 {
-                    msg = "生成默认配置失败";
+                    msg = "生成默认配置文件失败";
                     return -1;
                 }
 
                 //开始修改配置
+                log(config, ref v2rayConfig);
+
                 //本地端口
                 inbound(config, ref v2rayConfig);
 
@@ -65,25 +71,25 @@ namespace v2rayN.Handler
                 //vmess协议服务器配置
                 outbound(config, ref v2rayConfig);
 
-                Utils.ToJsonFile(v2rayConfig, Utils.GetPath(v2rayConfigRes));
+                Utils.ToJsonFile(v2rayConfig, fileName);
 
                 msg = string.Format("配置成功 \r\n{0}({1}:{2})", config.remarks(), config.address(), config.port());
             }
             catch
             {
-                msg = "异常，生成默认配置失败";
+                msg = "异常，生成默认配置文件失败";
                 return -1;
             }
             return 0;
         }
 
         /// <summary>
-        /// 本地端口
+        /// 日志
         /// </summary>
         /// <param name="config"></param>
         /// <param name="v2rayConfig"></param>
         /// <returns></returns>
-        private static int inbound(Config config, ref V2rayConfig v2rayConfig)
+        private static int log(Config config, ref V2rayConfig v2rayConfig)
         {
             try
             {
@@ -98,7 +104,23 @@ namespace v2rayN.Handler
                     v2rayConfig.log.access = "";
                     v2rayConfig.log.error = "";
                 }
+            }
+            catch
+            {
+            }
+            return 0;
+        }
 
+        /// <summary>
+        /// 本地端口
+        /// </summary>
+        /// <param name="config"></param>
+        /// <param name="v2rayConfig"></param>
+        /// <returns></returns>
+        private static int inbound(Config config, ref V2rayConfig v2rayConfig)
+        {
+            try
+            {
                 //端口
                 v2rayConfig.inbound.port = config.inbound[0].localPort;
                 v2rayConfig.inbound.protocol = config.inbound[0].protocol;
@@ -111,7 +133,6 @@ namespace v2rayN.Handler
             }
             return 0;
         }
-
 
         /// <summary>
         /// 额外的传入连接配置
@@ -129,16 +150,16 @@ namespace v2rayN.Handler
                     return 0;
                 }
 
-                List<Inbound> inboundDetour = new List<Inbound>();
+                List<InboundDetourItem> inboundDetour = new List<InboundDetourItem>();
                 v2rayConfig.inboundDetour = inboundDetour;
 
                 //处理额外每个监听
                 for (int k = 1; k < config.inbound.Count; k++)
                 {
-                    Inbound inbound = new Inbound();
+                    InboundDetourItem inbound = new InboundDetourItem();
                     inboundDetour.Add(inbound);
 
-                    inbound.port = config.inbound[k].localPort;
+                    inbound.port = config.inbound[k].localPort.ToString();
                     inbound.listen = v2rayConfig.inbound.listen;
                     inbound.protocol = config.inbound[k].protocol;
 
@@ -154,7 +175,6 @@ namespace v2rayN.Handler
             }
             return 0;
         }
-
 
         /// <summary>
         /// 路由
@@ -253,7 +273,6 @@ namespace v2rayN.Handler
             return 0;
         }
 
-
         /// <summary>
         /// vmess协议服务器配置
         /// </summary>
@@ -297,7 +316,28 @@ namespace v2rayN.Handler
                 v2rayConfig.outbound.mux.enabled = config.muxEnabled;
 
                 //远程服务器底层传输配置
-                v2rayConfig.outbound.streamSettings.network = config.network();
+                StreamSettings streamSettings = v2rayConfig.outbound.streamSettings;
+                boundStreamSettings(config, "out", ref streamSettings);
+            }
+            catch
+            {
+            }
+            return 0;
+        }
+
+        /// <summary>
+        /// vmess协议远程服务器底层传输配置
+        /// </summary>
+        /// <param name="config"></param>
+        /// <param name="iobound"></param>
+        /// <param name="streamSettings"></param>
+        /// <returns></returns>
+        private static int boundStreamSettings(Config config, string iobound, ref StreamSettings streamSettings)
+        {
+            try
+            {
+                //远程服务器底层传输配置
+                streamSettings.network = config.network();
 
                 //streamSettings
                 switch (config.network())
@@ -307,14 +347,28 @@ namespace v2rayN.Handler
                         Kcpsettings kcpsettings = new Kcpsettings();
                         kcpsettings.mtu = 1350;
                         kcpsettings.tti = 50;
-                        kcpsettings.uplinkCapacity = 12;
-                        kcpsettings.downlinkCapacity = 100;
+                        if (iobound.Equals("out"))
+                        {
+                            kcpsettings.uplinkCapacity = 12;
+                            kcpsettings.downlinkCapacity = 100;
+                        }
+                        else if (iobound.Equals("in"))
+                        {
+                            kcpsettings.uplinkCapacity = 100;
+                            kcpsettings.downlinkCapacity = 100;
+                        }
+                        else
+                        {
+                            kcpsettings.uplinkCapacity = 12;
+                            kcpsettings.downlinkCapacity = 100;
+                        }
+
                         kcpsettings.congestion = false;
                         kcpsettings.readBufferSize = 2;
                         kcpsettings.writeBufferSize = 2;
                         kcpsettings.header = new Header();
                         kcpsettings.header.type = config.headerType();
-                        v2rayConfig.outbound.streamSettings.kcpsettings = kcpsettings;
+                        streamSettings.kcpsettings = kcpsettings;
                         break;
                     //ws
                     case "ws":
@@ -335,7 +389,7 @@ namespace v2rayN.Handler
 
                             tcpSettings.header.request = Utils.FromJson<object>(request);
                             tcpSettings.header.response = Utils.FromJson<object>(response);
-                            v2rayConfig.outbound.streamSettings.tcpSettings = tcpSettings;
+                            streamSettings.tcpSettings = tcpSettings;
                         }
                         break;
                 }
@@ -345,5 +399,366 @@ namespace v2rayN.Handler
             }
             return 0;
         }
+
+        #endregion
+
+        #region 生成服务端端配置
+
+        /// <summary>
+        /// 生成v2ray的客户端配置文件
+        /// </summary>
+        /// <param name="config"></param>
+        /// <param name="fileName"></param>
+        /// <param name="msg"></param>
+        /// <returns></returns>
+        public static int GenerateServerConfig(Config config, string fileName, out string msg)
+        {
+            msg = string.Empty;
+
+            try
+            {
+                //检查GUI设置
+                if (config == null
+                    || config.index < 0
+                    || config.vmess.Count <= 0
+                    || config.index > config.vmess.Count - 1
+                    )
+                {
+                    msg = "请先检查服务器设置";
+                    return -1;
+                }
+
+                msg = "初始化配置";
+
+                //取得默认配置
+                string result = Utils.GetEmbedText(SampleServer);
+                if (Utils.IsNullOrEmpty(result))
+                {
+                    msg = "取得默认配置失败";
+                    return -1;
+                }
+
+                //转成Json
+                V2rayConfig v2rayConfig = Utils.FromJson<V2rayConfig>(result);
+                if (v2rayConfig == null)
+                {
+                    msg = "生成默认配置文件失败";
+                    return -1;
+                }
+
+                ////开始修改配置
+                log(config, ref v2rayConfig);
+
+                //vmess协议服务器配置
+                ServerInbound(config, ref v2rayConfig);
+
+                //传出设置
+                ServerOutbound(config, ref v2rayConfig);
+
+                Utils.ToJsonFile(v2rayConfig, fileName);
+
+                msg = string.Format("配置成功 \r\n{0}({1}:{2})", config.remarks(), config.address(), config.port());
+            }
+            catch
+            {
+                msg = "异常，生成默认配置文件失败";
+                return -1;
+            }
+            return 0;
+        }
+
+        /// <summary>
+        /// vmess协议服务器配置
+        /// </summary>
+        /// <param name="config"></param>
+        /// <param name="v2rayConfig"></param>
+        /// <returns></returns>
+        private static int ServerInbound(Config config, ref V2rayConfig v2rayConfig)
+        {
+            try
+            {
+                UsersItem usersItem;
+                if (v2rayConfig.inbound.settings.clients.Count <= 0)
+                {
+                    usersItem = new UsersItem();
+                    v2rayConfig.inbound.settings.clients.Add(usersItem);
+                }
+                else
+                {
+                    usersItem = v2rayConfig.inbound.settings.clients[0];
+                }
+                //远程服务器端口
+                v2rayConfig.inbound.port = config.port();
+
+                //远程服务器用户ID
+                usersItem.id = config.id();
+                usersItem.alterId = config.alterId();
+
+                //远程服务器底层传输配置
+                StreamSettings streamSettings = v2rayConfig.inbound.streamSettings;
+                boundStreamSettings(config, "in", ref streamSettings);
+            }
+            catch
+            {
+            }
+            return 0;
+        }
+
+        /// <summary>
+        /// 传出设置
+        /// </summary>
+        /// <param name="config"></param>
+        /// <param name="v2rayConfig"></param>
+        /// <returns></returns>
+        private static int ServerOutbound(Config config, ref V2rayConfig v2rayConfig)
+        {
+            try
+            {
+                if (v2rayConfig.outbound != null)
+                {
+                    v2rayConfig.outbound.settings = null;
+                }
+                if (v2rayConfig.outboundDetour != null
+                    && v2rayConfig.outboundDetour.Count > 0)
+                {
+                    v2rayConfig.outboundDetour[0].settings = null;
+                }
+            }
+            catch
+            {
+            }
+            return 0;
+        }
+        #endregion
+
+        #region 导入(导出)客户端/服务端配置
+
+        /// <summary>
+        /// 导入v2ray客户端配置
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <param name="msg"></param>
+        /// <returns></returns>
+        public static VmessItem ImportFromClientConfig(string fileName, out string msg)
+        {
+            msg = string.Empty;
+            VmessItem vmessItem = new VmessItem();
+
+            try
+            {
+                //载入配置文件 
+                string result = Utils.LoadResource(fileName);
+                if (Utils.IsNullOrEmpty(result))
+                {
+                    msg = "读取配置文件失败";
+                    return null;
+                }
+
+                //转成Json
+                V2rayConfig v2rayConfig = Utils.FromJson<V2rayConfig>(result);
+                if (v2rayConfig == null)
+                {
+                    msg = "转换配置文件失败";
+                    return null;
+                }
+
+                if (v2rayConfig.outbound == null
+                    || Utils.IsNullOrEmpty(v2rayConfig.outbound.protocol)
+                    || v2rayConfig.outbound.protocol != "vmess"
+                    || v2rayConfig.outbound.settings == null
+                    || v2rayConfig.outbound.settings.vnext == null
+                    || v2rayConfig.outbound.settings.vnext.Count <= 0
+                    || v2rayConfig.outbound.settings.vnext[0].users == null
+                    || v2rayConfig.outbound.settings.vnext[0].users.Count <= 0)
+                {
+                    msg = "不是正确的客户端配置文件，请检查";
+                    return null;
+                }
+
+                vmessItem.security = Global.DefaultSecurity;
+                vmessItem.network = Global.DefaultNetwork;
+                vmessItem.headerType = Global.None;
+                vmessItem.address = v2rayConfig.outbound.settings.vnext[0].address;
+                vmessItem.port = v2rayConfig.outbound.settings.vnext[0].port;
+                vmessItem.id = v2rayConfig.outbound.settings.vnext[0].users[0].id;
+                vmessItem.alterId = v2rayConfig.outbound.settings.vnext[0].users[0].alterId;
+                vmessItem.remarks = string.Format("import@{0}", DateTime.Now.ToShortDateString());
+
+                //tcp or kcp
+                if (v2rayConfig.outbound.streamSettings != null
+                    && v2rayConfig.outbound.streamSettings.network != null
+                    && !Utils.IsNullOrEmpty(v2rayConfig.outbound.streamSettings.network))
+                {
+                    vmessItem.network = v2rayConfig.outbound.streamSettings.network;
+                }
+
+                //tcp伪装http
+                if (v2rayConfig.outbound.streamSettings != null
+                    && v2rayConfig.outbound.streamSettings.tcpSettings != null
+                    && v2rayConfig.outbound.streamSettings.tcpSettings.header != null
+                    && !Utils.IsNullOrEmpty(v2rayConfig.outbound.streamSettings.tcpSettings.header.type))
+                {
+                    if (v2rayConfig.outbound.streamSettings.tcpSettings.header.type.Equals(Global.TcpHeaderHttp))
+                    {
+                        vmessItem.headerType = v2rayConfig.outbound.streamSettings.tcpSettings.header.type;
+                        string request = Convert.ToString(v2rayConfig.outbound.streamSettings.tcpSettings.header.request);
+                        if (!Utils.IsNullOrEmpty(request))
+                        {
+                            V2rayTcpRequest v2rayTcpRequest = Utils.FromJson<V2rayTcpRequest>(request);
+                            if (v2rayTcpRequest != null
+                                && v2rayTcpRequest.headers != null
+                                && v2rayTcpRequest.headers.Host != null
+                                && v2rayTcpRequest.headers.Host.Count > 0)
+                            {
+                                vmessItem.requestHost = v2rayTcpRequest.headers.Host[0];
+                            }
+                        }
+                    }
+                }
+                //kcp伪装
+                if (v2rayConfig.outbound.streamSettings != null
+                    && v2rayConfig.outbound.streamSettings.kcpsettings != null
+                    && v2rayConfig.outbound.streamSettings.kcpsettings.header != null
+                    && !Utils.IsNullOrEmpty(v2rayConfig.outbound.streamSettings.kcpsettings.header.type))
+                {
+                    vmessItem.headerType = v2rayConfig.outbound.streamSettings.kcpsettings.header.type;
+                }
+
+            }
+            catch
+            {
+                msg = "异常，不是正确的客户端配置文件，请检查";
+                return null;
+            }
+
+            return vmessItem;
+        }
+
+        /// <summary>
+        /// 导入v2ray服务端配置
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <param name="msg"></param>
+        /// <returns></returns>
+        public static VmessItem ImportFromServerConfig(string fileName, out string msg)
+        {
+            msg = string.Empty;
+            VmessItem vmessItem = new VmessItem();
+
+            try
+            {
+                //载入配置文件 
+                string result = Utils.LoadResource(fileName);
+                if (Utils.IsNullOrEmpty(result))
+                {
+                    msg = "读取配置文件失败";
+                    return null;
+                }
+
+                //转成Json
+                V2rayConfig v2rayConfig = Utils.FromJson<V2rayConfig>(result);
+                if (v2rayConfig == null)
+                {
+                    msg = "转换配置文件失败";
+                    return null;
+                }
+
+                if (v2rayConfig.inbound == null
+                    || Utils.IsNullOrEmpty(v2rayConfig.inbound.protocol)
+                    || v2rayConfig.inbound.protocol != "vmess"
+                    || v2rayConfig.inbound.settings == null
+                    || v2rayConfig.inbound.settings.clients == null
+                    || v2rayConfig.inbound.settings.clients.Count <= 0)
+                {
+                    msg = "不是正确的服务端配置文件，请检查";
+                    return null;
+                }
+
+                vmessItem.security = Global.DefaultSecurity;
+                vmessItem.network = Global.DefaultNetwork;
+                vmessItem.headerType = Global.None;
+                vmessItem.address = string.Empty;
+                vmessItem.port = v2rayConfig.inbound.port;
+                vmessItem.id = v2rayConfig.inbound.settings.clients[0].id;
+                vmessItem.alterId = v2rayConfig.inbound.settings.clients[0].alterId;
+
+                vmessItem.remarks = string.Format("import@{0}", DateTime.Now.ToShortDateString());
+
+                //tcp or kcp
+                if (v2rayConfig.inbound.streamSettings != null
+                    && v2rayConfig.inbound.streamSettings.network != null
+                    && !Utils.IsNullOrEmpty(v2rayConfig.inbound.streamSettings.network))
+                {
+                    vmessItem.network = v2rayConfig.inbound.streamSettings.network;
+                }
+
+                //tcp伪装http
+                if (v2rayConfig.inbound.streamSettings != null
+                    && v2rayConfig.inbound.streamSettings.tcpSettings != null
+                    && v2rayConfig.inbound.streamSettings.tcpSettings.header != null
+                    && !Utils.IsNullOrEmpty(v2rayConfig.inbound.streamSettings.tcpSettings.header.type))
+                {
+                    if (v2rayConfig.inbound.streamSettings.tcpSettings.header.type.Equals(Global.TcpHeaderHttp))
+                    {
+                        vmessItem.headerType = v2rayConfig.inbound.streamSettings.tcpSettings.header.type;
+                        string request = Convert.ToString(v2rayConfig.inbound.streamSettings.tcpSettings.header.request);
+                        if (!Utils.IsNullOrEmpty(request))
+                        {
+                            V2rayTcpRequest v2rayTcpRequest = Utils.FromJson<V2rayTcpRequest>(request);
+                            if (v2rayTcpRequest != null
+                                && v2rayTcpRequest.headers != null
+                                && v2rayTcpRequest.headers.Host != null
+                                && v2rayTcpRequest.headers.Host.Count > 0)
+                            {
+                                vmessItem.requestHost = v2rayTcpRequest.headers.Host[0];
+                            }
+                        }
+                    }
+                }
+                ////kcp伪装
+                //if (v2rayConfig.outbound.streamSettings != null
+                //    && v2rayConfig.outbound.streamSettings.kcpsettings != null
+                //    && v2rayConfig.outbound.streamSettings.kcpsettings.header != null
+                //    && !Utils.IsNullOrEmpty(v2rayConfig.outbound.streamSettings.kcpsettings.header.type))
+                //{
+                //    cmbHeaderType.Text = v2rayConfig.outbound.streamSettings.kcpsettings.header.type;
+                //}
+            }
+            catch
+            {
+                msg = "异常，不是正确的客户端配置文件，请检查";
+                return null;
+            }
+            return vmessItem;
+        }
+
+        /// <summary>
+        /// 导出为客户端配置
+        /// </summary>
+        /// <param name="config"></param>
+        /// <param name="fileName"></param>
+        /// <param name="msg"></param>
+        /// <returns></returns>
+        public static int Export2ClientConfig(Config config, string fileName, out string msg)
+        {
+            msg = string.Empty;
+            return GenerateClientConfig(config, fileName, out msg);
+        }
+
+        /// <summary>
+        /// 导出为服务端配置
+        /// </summary>
+        /// <param name="config"></param>
+        /// <param name="fileName"></param>
+        /// <param name="msg"></param>
+        /// <returns></returns>
+        public static int Export2ServerConfig(Config config, string fileName, out string msg)
+        {
+            msg = string.Empty;
+            return GenerateServerConfig(config, fileName, out msg);
+        }
+
+        #endregion
+
     }
 }

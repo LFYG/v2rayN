@@ -153,14 +153,14 @@
     <EmbeddedResource Include="v2ray.ico" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Mode\SampleConfig.txt" />
+    <EmbeddedResource Include="Sample\SampleClientConfig.txt" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Newtonsoft.Json.dll" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Mode\SampleHttprequest.txt" />
-    <EmbeddedResource Include="Mode\SampleHttpresponse.txt" />
+    <EmbeddedResource Include="Sample\SampleHttprequest.txt" />
+    <EmbeddedResource Include="Sample\SampleHttpresponse.txt" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">
@@ -183,6 +183,21 @@
       <ProductName>Windows Installer 4.5</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Sample\SampleServerConfig.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\restart.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\option.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\server.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\minimize.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
