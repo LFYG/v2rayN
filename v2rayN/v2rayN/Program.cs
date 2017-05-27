@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
 using System.Windows.Forms;
@@ -31,14 +33,23 @@ namespace v2rayN
 
         private static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
         {
-            Assembly assembly = Assembly.GetExecutingAssembly();
-            using (var stream = assembly.GetManifestResourceStream("v2rayN.Newtonsoft.Json.dll"))
+            try
             {
-                byte[] buffer = new byte[stream.Length];
-                stream.Read(buffer, 0, buffer.Length);
-                stream.Flush();
-                stream.Close();
-                return Assembly.Load(buffer);
+                string resourceName = "v2rayN." + new AssemblyName(args.Name).Name + ".dll";
+                using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName))
+                {
+                    if (stream == null)
+                    {
+                        return null;
+                    }
+                    byte[] assemblyData = new byte[stream.Length];
+                    stream.Read(assemblyData, 0, assemblyData.Length);
+                    return Assembly.Load(assemblyData);
+                }
+            }
+            catch
+            {
+                return null;
             }
         }
 

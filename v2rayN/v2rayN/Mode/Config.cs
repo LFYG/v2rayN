@@ -143,12 +143,18 @@ namespace v2rayN.Mode
             }
             return vmess[index].requestHost;
         }
-
-
+        public string streamSecurity()
+        {
+            if (index < 0 || Utils.IsNullOrEmpty(vmess[index].streamSecurity))
+            {
+                return string.Empty;
+            }
+            return vmess[index].streamSecurity;
+        }
         #endregion
 
     }
-    
+
     [Serializable]
     public class VmessItem
     {
@@ -190,6 +196,11 @@ namespace v2rayN.Mode
         /// 伪装的域名
         /// </summary>
         public string requestHost { get; set; }
+
+        /// <summary>
+        /// 底层传输安全
+        /// </summary>
+        public string streamSecurity { get; set; }
 
     }
 

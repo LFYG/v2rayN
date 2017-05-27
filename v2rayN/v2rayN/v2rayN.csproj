@@ -64,6 +64,12 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Gma.QrCodeNet.Encoding, Version=0.4.0.0, Culture=neutral, PublicKeyToken=e8a75d24b142be49, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\Gma.QrCodeNet.Encoding.dll</HintPath>
+      <Private>False</Private>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>.\Newtonsoft.Json.dll</HintPath>
       <Private>False</Private>
@@ -92,8 +98,16 @@
     <Compile Include="Forms\BaseForm.Designer.cs">
       <DependentUpon>BaseForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\QRCodeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\QRCodeForm.Designer.cs">
+      <DependentUpon>QRCodeForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Global.cs" />
+    <Compile Include="Handler\QRCodeHelper.cs" />
     <Compile Include="Handler\RoutingRuleHandler.cs" />
+    <Compile Include="Mode\VmessQRCode.cs" />
     <Compile Include="Mode\V2rayTcpRequest.cs" />
     <Compile Include="Handler\ConfigHandler.cs" />
     <Compile Include="Handler\ProxySetting.cs" />
@@ -128,6 +142,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\OptionSettingForm.resx">
       <DependentUpon>OptionSettingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\QRCodeForm.resx">
+      <DependentUpon>QRCodeForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -198,6 +215,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\minimize.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Gma.QrCodeNet.Encoding.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

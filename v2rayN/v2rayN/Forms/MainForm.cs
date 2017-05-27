@@ -211,7 +211,6 @@ namespace v2rayN.Forms
             }
         }
 
-
         private void menuAddServer_Click(object sender, EventArgs e)
         {
             AddServerForm fm = new AddServerForm();
@@ -340,6 +339,18 @@ namespace v2rayN.Forms
                 UI.Show(string.Format("服务端配置文件保存在:{0}", fileName));
             }
         }
+        
+        private void menuShareQRCode_Click(object sender, EventArgs e)
+        {
+            int index = GetLvSelectedIndex();
+            if (index < 0)
+            {
+                return;
+            }
+            QRCodeForm fm = new QRCodeForm();
+            fm.Index = index;
+            fm.ShowDialog();
+        }
 
         private void tsbOptionSetting_Click(object sender, EventArgs e)
         {
@@ -360,6 +371,8 @@ namespace v2rayN.Forms
 
         private void tsbClose_Click(object sender, EventArgs e)
         {
+
+
             this.WindowState = FormWindowState.Minimized;
         }
 
@@ -509,6 +522,11 @@ namespace v2rayN.Forms
             System.Diagnostics.Process.Start(Global.UpdateUrl);
         }
 
+        private void menuAbout_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(Global.AboutUrl);
+        }
+
         private void ShowForm()
         {
             this.Show();
@@ -556,8 +574,6 @@ namespace v2rayN.Forms
         }
 
         #endregion
-
-
 
     }
 }

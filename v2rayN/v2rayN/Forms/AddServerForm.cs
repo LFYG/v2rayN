@@ -45,6 +45,7 @@ namespace v2rayN.Forms
 
             cmbHeaderType.Text = vmessItem.headerType;
             txtRequestHost.Text = vmessItem.requestHost;
+            cmbStreamSecurity.Text = vmessItem.streamSecurity;
         }
 
 
@@ -63,6 +64,7 @@ namespace v2rayN.Forms
 
             cmbHeaderType.Text = Global.None;
             txtRequestHost.Text = "";
+            cmbStreamSecurity.Text = "";
         }
 
         private void btnOK_Click(object sender, EventArgs e)
@@ -77,6 +79,7 @@ namespace v2rayN.Forms
 
             string headerType = cmbHeaderType.Text;
             string requestHost = txtRequestHost.Text;
+            string streamSecurity = cmbStreamSecurity.Text;
 
             if (Utils.IsNullOrEmpty(address))
             {
@@ -110,6 +113,7 @@ namespace v2rayN.Forms
 
             vmessItem.headerType = headerType;
             vmessItem.requestHost = requestHost;
+            vmessItem.streamSecurity = streamSecurity;
 
             if (ConfigHandler.AddServer(ref config, vmessItem, EditIndex) == 0)
             {
@@ -189,9 +193,10 @@ namespace v2rayN.Forms
             cmbNetwork.Text = vmessItem.network;
             cmbHeaderType.Text = vmessItem.headerType;
             txtRequestHost.Text = vmessItem.requestHost;
+            cmbStreamSecurity.Text = vmessItem.streamSecurity;
         }
 
         #endregion
-         
+
     }
 }

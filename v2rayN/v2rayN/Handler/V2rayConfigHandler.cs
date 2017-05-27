@@ -338,6 +338,7 @@ namespace v2rayN.Handler
             {
                 //远程服务器底层传输配置
                 streamSettings.network = config.network();
+                streamSettings.security = config.streamSecurity();
 
                 //streamSettings
                 switch (config.network())

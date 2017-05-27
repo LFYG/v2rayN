@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -6,6 +7,7 @@ using System.IO;
 using System.Net.NetworkInformation;
 using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -74,13 +76,31 @@ namespace v2rayN
         {
             try
             {
-                T obj = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(strJson);
+                T obj = JsonConvert.DeserializeObject<T>(strJson);
                 return obj;
             }
             catch
             {
-                return Newtonsoft.Json.JsonConvert.DeserializeObject<T>("");
+                return JsonConvert.DeserializeObject<T>("");
             }
+        }
+
+        /// <summary>
+        /// 序列化成Json
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public static string ToJson(Object obj)
+        {
+            string result = string.Empty;
+            try
+            {
+                result = JsonConvert.SerializeObject(obj);
+            }
+            catch
+            {
+            }
+            return result;
         }
 
         /// <summary>
@@ -96,7 +116,7 @@ namespace v2rayN
             {
                 using (StreamWriter file = System.IO.File.CreateText(filePath))
                 {
-                    Newtonsoft.Json.JsonSerializer serializer = new Newtonsoft.Json.JsonSerializer();
+                    JsonSerializer serializer = new JsonSerializer();
                     serializer.Serialize(file, obj);
                 }
                 result = 0;
@@ -107,6 +127,10 @@ namespace v2rayN
             }
             return result;
         }
+
+        #endregion
+
+        #region 转换函数
 
         /// <summary>
         /// List<string>转逗号分隔的字符串
@@ -141,7 +165,26 @@ namespace v2rayN
             }
         }
 
+        /// <summary>
+        /// Base64编码
+        /// </summary>
+        /// <param name="plainText"></param>
+        /// <returns></returns>
+        public static string Base64Encode(string plainText)
+        {
+            try
+            {
+                var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
+                return Convert.ToBase64String(plainTextBytes);
+            }
+            catch
+            {
+                return string.Empty;
+            }
+        }
+
         #endregion
+
 
         #region 数据检查
 

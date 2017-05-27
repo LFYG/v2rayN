@@ -32,6 +32,8 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label13 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.cmbStreamSecurity = new System.Windows.Forms.ComboBox();
             this.label12 = new System.Windows.Forms.Label();
             this.txtRequestHost = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
@@ -100,7 +102,7 @@
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(0, 34);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(515, 323);
+            this.groupBox1.Size = new System.Drawing.Size(515, 359);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "服务器";
@@ -116,18 +118,41 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.label15);
+            this.groupBox2.Controls.Add(this.cmbStreamSecurity);
             this.groupBox2.Controls.Add(this.label12);
             this.groupBox2.Controls.Add(this.txtRequestHost);
             this.groupBox2.Controls.Add(this.label11);
             this.groupBox2.Controls.Add(this.label10);
             this.groupBox2.Controls.Add(this.cmbHeaderType);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.groupBox2.Location = new System.Drawing.Point(3, 225);
+            this.groupBox2.Location = new System.Drawing.Point(3, 236);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(509, 95);
+            this.groupBox2.Size = new System.Drawing.Size(509, 120);
             this.groupBox2.TabIndex = 21;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "不清楚则保持默认值";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(9, 92);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(77, 12);
+            this.label15.TabIndex = 22;
+            this.label15.Text = "底层传输安全";
+            // 
+            // cmbStreamSecurity
+            // 
+            this.cmbStreamSecurity.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbStreamSecurity.FormattingEnabled = true;
+            this.cmbStreamSecurity.Items.AddRange(new object[] {
+            "",
+            "tls"});
+            this.cmbStreamSecurity.Location = new System.Drawing.Point(124, 88);
+            this.cmbStreamSecurity.Name = "cmbStreamSecurity";
+            this.cmbStreamSecurity.Size = new System.Drawing.Size(143, 20);
+            this.cmbStreamSecurity.TabIndex = 21;
             // 
             // label12
             // 
@@ -326,7 +351,7 @@
             this.panel2.Controls.Add(this.btnClose);
             this.panel2.Controls.Add(this.btnOK);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 357);
+            this.panel2.Location = new System.Drawing.Point(0, 393);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(515, 60);
             this.panel2.TabIndex = 7;
@@ -386,7 +411,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnClose;
-            this.ClientSize = new System.Drawing.Size(515, 417);
+            this.ClientSize = new System.Drawing.Size(515, 453);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
@@ -441,5 +466,7 @@
         private System.Windows.Forms.ToolStripMenuItem MenuItem1;
         private System.Windows.Forms.ToolStripMenuItem MenuItemImportClient;
         private System.Windows.Forms.ToolStripMenuItem MenuItemImportServer;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.ComboBox cmbStreamSecurity;
     }
 }

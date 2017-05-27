@@ -178,6 +178,7 @@ namespace v2rayN.Handler
             vmessItem.network = config.vmess[index].network;
             vmessItem.headerType = config.vmess[index].headerType;
             vmessItem.requestHost = config.vmess[index].requestHost;
+            vmessItem.streamSecurity = config.vmess[index].streamSecurity;
             vmessItem.remarks = string.Format("{0}-副本", config.vmess[index].remarks);
             config.vmess.Add(vmessItem);
 
@@ -233,6 +234,38 @@ namespace v2rayN.Handler
         public static void ToJsonFile(Config config)
         {
             Utils.ToJsonFile(config, Utils.GetPath(configRes));
+        }
+
+        /// <summary>
+        /// 取得服务器QRCode配置
+        /// </summary>
+        /// <param name="config"></param>
+        /// <param name="index"></param>
+        /// <param name="vmessQRCode"></param>
+        /// <returns></returns>
+        public static int GetVmessQRCode(Config config, int index, ref VmessQRCode vmessQRCode)
+        {
+            try
+            {
+                VmessItem vmessItem = config.vmess[index];
+
+                vmessQRCode = new VmessQRCode();
+                vmessQRCode.ps = ""; //备注也许很长vmessItem.remarks;
+                vmessQRCode.add = vmessItem.address;
+                vmessQRCode.port = vmessItem.port.ToString();
+                vmessQRCode.id = vmessItem.id;
+                vmessQRCode.aid = vmessItem.alterId.ToString();
+                vmessQRCode.net = vmessItem.network;
+                vmessQRCode.type = vmessItem.headerType;
+                vmessQRCode.host = vmessItem.requestHost;
+                vmessQRCode.tls = vmessItem.streamSecurity;
+
+                return 0;
+            }
+            catch
+            {
+                return -1;
+            }
         }
 
     }

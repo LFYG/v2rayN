@@ -160,8 +160,8 @@ namespace v2rayN.Forms
             //Mux
             config.muxEnabled = muxEnabled;
 
-            //其他设置 
-            OtherOptionSetting();
+            //开机自动启动
+            Utils.SetAutoRun(chkAutoRun.Checked);
 
             return 0;
         }
@@ -205,15 +205,6 @@ namespace v2rayN.Forms
             txtlocalPort2.Enabled =
             cmbprotocol2.Enabled =
             chkudpEnabled2.Enabled = blAllow2;
-        }
-
-        /// <summary>
-        /// 其他设置
-        /// </summary>
-        private void OtherOptionSetting()
-        {
-            //开机自动启动
-            Utils.SetAutoRun(chkAutoRun.Checked);
         }
     }
 }

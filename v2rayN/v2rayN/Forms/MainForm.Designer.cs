@@ -38,6 +38,8 @@
             this.menuServers = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.menuUpdate = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.menuExit = new System.Windows.Forms.ToolStripMenuItem();
             this.bgwPing = new System.ComponentModel.BackgroundWorker();
             this.cmsLv = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -50,6 +52,7 @@
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.menuExport2ClientConfig = new System.Windows.Forms.ToolStripMenuItem();
             this.menuExport2ServerConfig = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuShareQRCode = new System.Windows.Forms.ToolStripMenuItem();
             this.tsbServer = new System.Windows.Forms.ToolStripDropDownButton();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.txtMsgBox = new System.Windows.Forms.TextBox();
@@ -62,8 +65,8 @@
             this.tsbOptionSetting = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.tsbReload = new System.Windows.Forms.ToolStripButton();
-            this.tsbClose = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsbClose = new System.Windows.Forms.ToolStripButton();
             this.cmsMain.SuspendLayout();
             this.cmsLv.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -89,11 +92,13 @@
             this.menuServers,
             this.toolStripSeparator2,
             this.menuUpdate,
+            this.menuAbout,
+            this.toolStripSeparator8,
             this.menuExit});
             this.cmsMain.Name = "contextMenuStrip1";
             this.cmsMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.cmsMain.ShowImageMargin = false;
-            this.cmsMain.Size = new System.Drawing.Size(106, 104);
+            this.cmsMain.Size = new System.Drawing.Size(106, 132);
             // 
             // menuOpenMain
             // 
@@ -125,6 +130,18 @@
             this.menuUpdate.Text = "检查更新";
             this.menuUpdate.Click += new System.EventHandler(this.menuUpdate_Click);
             // 
+            // menuAbout
+            // 
+            this.menuAbout.Name = "menuAbout";
+            this.menuAbout.Size = new System.Drawing.Size(105, 22);
+            this.menuAbout.Text = "关于";
+            this.menuAbout.Click += new System.EventHandler(this.menuAbout_Click);
+            // 
+            // toolStripSeparator8
+            // 
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(102, 6);
+            // 
             // menuExit
             // 
             this.menuExit.Name = "menuExit";
@@ -149,10 +166,11 @@
             this.menuPingServer,
             this.toolStripSeparator6,
             this.menuExport2ClientConfig,
-            this.menuExport2ServerConfig});
+            this.menuExport2ServerConfig,
+            this.menuShareQRCode});
             this.cmsLv.Name = "cmsLv";
             this.cmsLv.OwnerItem = this.tsbServer;
-            this.cmsLv.Size = new System.Drawing.Size(227, 170);
+            this.cmsLv.Size = new System.Drawing.Size(227, 214);
             // 
             // menuAddServer
             // 
@@ -212,6 +230,13 @@
             this.menuExport2ServerConfig.Size = new System.Drawing.Size(226, 22);
             this.menuExport2ServerConfig.Text = "导出所选服务器为服务端配置";
             this.menuExport2ServerConfig.Click += new System.EventHandler(this.menuExport2ServerConfig_Click);
+            // 
+            // menuShareQRCode
+            // 
+            this.menuShareQRCode.Name = "menuShareQRCode";
+            this.menuShareQRCode.Size = new System.Drawing.Size(226, 22);
+            this.menuShareQRCode.Text = "分享服务器配置";
+            this.menuShareQRCode.Click += new System.EventHandler(this.menuShareQRCode_Click);
             // 
             // tsbServer
             // 
@@ -345,6 +370,11 @@
             this.tsbReload.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsbReload.Click += new System.EventHandler(this.tsbReload_Click);
             // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(6, 51);
+            // 
             // tsbClose
             // 
             this.tsbClose.Image = global::v2rayN.Properties.Resources.minimize;
@@ -354,11 +384,6 @@
             this.tsbClose.Text = "  最小化  ";
             this.tsbClose.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsbClose.Click += new System.EventHandler(this.tsbClose_Click);
-            // 
-            // toolStripSeparator7
-            // 
-            this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(6, 51);
             // 
             // MainForm
             // 
@@ -425,6 +450,9 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
+        private System.Windows.Forms.ToolStripMenuItem menuAbout;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
+        private System.Windows.Forms.ToolStripMenuItem menuShareQRCode;
     }
 }
 

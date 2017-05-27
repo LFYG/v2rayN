@@ -290,6 +290,10 @@ namespace v2rayN.Mode
         /// </summary>
         public string network { get; set; }
         /// <summary>
+        /// 
+        /// </summary>
+        public string security { get; set; }
+        /// <summary>
         /// Tcp传输额外设置
         /// </summary>
         public TcpSettings tcpSettings { get; set; }
