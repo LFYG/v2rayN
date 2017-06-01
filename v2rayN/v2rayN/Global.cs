@@ -83,6 +83,13 @@ namespace v2rayN
         /// </summary>
         public const string blockTag = "blockout";
 
+        /// <summary>
+        /// vmess协议
+        /// </summary>
+        public const string vmessProtocol = "vmess://";
+
+
+
         #endregion
 
         #region 全局变量

@@ -22,6 +22,12 @@ namespace v2rayN.Forms
 
         private void QRCodeForm_Load(object sender, EventArgs e)
         {
+            txtUrl.MouseUp += txtUrl_MouseUp;
+        }
+
+        void txtUrl_MouseUp(object sender, MouseEventArgs e)
+        {
+            txtUrl.SelectAll();
         }
 
         private void QRCodeForm_Shown(object sender, EventArgs e)
@@ -35,7 +41,7 @@ namespace v2rayN.Forms
                 }
                 string url = Utils.ToJson(vmessQRCode);
                 url = Utils.Base64Encode(url);
-                url = string.Format("vmess://{0}", url);
+                url = string.Format("{0}{1}", Global.vmessProtocol, url);
                 picQRCode.Image = QRCodeHelper.GetQRCode(url);
                 txtUrl.Text = url;
             }

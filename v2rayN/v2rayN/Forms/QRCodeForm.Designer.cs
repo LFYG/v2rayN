@@ -41,9 +41,9 @@
             // 
             this.groupBox1.Controls.Add(this.txtUrl);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.groupBox1.Location = new System.Drawing.Point(0, 406);
+            this.groupBox1.Location = new System.Drawing.Point(0, 407);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(392, 50);
+            this.groupBox1.Size = new System.Drawing.Size(392, 146);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "URL";
@@ -52,18 +52,18 @@
             // 
             this.txtUrl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtUrl.Location = new System.Drawing.Point(3, 17);
+            this.txtUrl.Multiline = true;
             this.txtUrl.Name = "txtUrl";
             this.txtUrl.ReadOnly = true;
-            this.txtUrl.Size = new System.Drawing.Size(386, 21);
+            this.txtUrl.Size = new System.Drawing.Size(386, 126);
             this.txtUrl.TabIndex = 0;
-            this.txtUrl.WordWrap = false;
             // 
             // picQRCode
             // 
             this.picQRCode.Dock = System.Windows.Forms.DockStyle.Fill;
             this.picQRCode.Location = new System.Drawing.Point(3, 17);
             this.picQRCode.Name = "picQRCode";
-            this.picQRCode.Size = new System.Drawing.Size(386, 386);
+            this.picQRCode.Size = new System.Drawing.Size(386, 387);
             this.picQRCode.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picQRCode.TabIndex = 23;
             this.picQRCode.TabStop = false;
@@ -74,7 +74,7 @@
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox2.Location = new System.Drawing.Point(0, 0);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(392, 406);
+            this.groupBox2.Size = new System.Drawing.Size(392, 407);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "QRCode";
@@ -83,7 +83,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(392, 456);
+            this.ClientSize = new System.Drawing.Size(392, 553);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Name = "QRCodeForm";

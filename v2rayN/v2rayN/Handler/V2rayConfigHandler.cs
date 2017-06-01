@@ -734,6 +734,67 @@ namespace v2rayN.Handler
         }
 
         /// <summary>
+        /// 从剪贴板导入URL
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <param name="msg"></param>
+        /// <returns></returns>
+        public static VmessItem ImportFromClipboardConfig(out string msg)
+        {
+            msg = string.Empty;
+            VmessItem vmessItem = new VmessItem();
+
+            try
+            {
+                //载入配置文件 
+                string result = Utils.GetClipboardData();
+                if (Utils.IsNullOrEmpty(result))
+                {
+                    msg = "读取配置文件失败";
+                    return null;
+                }
+                if (!result.StartsWith(Global.vmessProtocol))
+                {
+                    msg = "非vmess协议";
+                    return null;
+                }
+                result = result.Substring(Global.vmessProtocol.Length);
+                //解码
+                result = Utils.Base64Decode(result);
+
+                //转成Json
+                VmessQRCode vmessQRCode = Utils.FromJson<VmessQRCode>(result);
+                if (vmessQRCode == null)
+                {
+                    msg = "转换配置文件失败";
+                    return null;
+                }
+
+                vmessItem.security = Global.DefaultSecurity;
+                vmessItem.network = Global.DefaultNetwork;
+                vmessItem.headerType = Global.None;
+
+                vmessItem.remarks = vmessQRCode.ps;
+                vmessItem.address = vmessQRCode.add;
+                vmessItem.port = Convert.ToInt32(vmessQRCode.port);
+                vmessItem.id = vmessQRCode.id;
+                vmessItem.alterId = Convert.ToInt32(vmessQRCode.aid);
+                vmessItem.network = vmessQRCode.net;
+                vmessItem.headerType = vmessQRCode.type;
+                vmessItem.requestHost = vmessQRCode.host;
+                vmessItem.streamSecurity = vmessQRCode.tls;
+            }
+            catch
+            {
+                msg = "异常，不是正确的客户端配置文件，请检查";
+                return null;
+            }
+
+            return vmessItem;
+        }
+
+
+        /// <summary>
         /// 导出为客户端配置
         /// </summary>
         /// <param name="config"></param>

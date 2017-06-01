@@ -250,7 +250,7 @@ namespace v2rayN.Handler
                 VmessItem vmessItem = config.vmess[index];
 
                 vmessQRCode = new VmessQRCode();
-                vmessQRCode.ps = ""; //备注也许很长vmessItem.remarks;
+                vmessQRCode.ps = vmessItem.remarks.Trim(); //备注也许很长 ;
                 vmessQRCode.add = vmessItem.address;
                 vmessQRCode.port = vmessItem.port.ToString();
                 vmessQRCode.id = vmessItem.id;

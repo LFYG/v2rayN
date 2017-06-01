@@ -61,7 +61,10 @@
             this.MenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItemImportClient = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItemImportServer = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.MenuItemImportClipboard = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnGUID = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -81,6 +84,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btnGUID);
             this.groupBox1.Controls.Add(this.label13);
             this.groupBox1.Controls.Add(this.groupBox2);
             this.groupBox1.Controls.Add(this.label9);
@@ -233,6 +237,7 @@
             this.cmbNetwork.Name = "cmbNetwork";
             this.cmbNetwork.Size = new System.Drawing.Size(143, 20);
             this.cmbNetwork.TabIndex = 12;
+            this.cmbNetwork.SelectedIndexChanged += new System.EventHandler(this.cmbNetwork_SelectedIndexChanged);
             // 
             // label7
             // 
@@ -302,7 +307,7 @@
             // 
             this.txtId.Location = new System.Drawing.Point(127, 85);
             this.txtId.Name = "txtId";
-            this.txtId.Size = new System.Drawing.Size(359, 21);
+            this.txtId.Size = new System.Drawing.Size(278, 21);
             this.txtId.TabIndex = 5;
             // 
             // label3
@@ -379,7 +384,9 @@
             // 
             this.MenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MenuItemImportClient,
-            this.MenuItemImportServer});
+            this.MenuItemImportServer,
+            this.toolStripSeparator1,
+            this.MenuItemImportClipboard});
             this.MenuItem1.Name = "MenuItem1";
             this.MenuItem1.Size = new System.Drawing.Size(89, 20);
             this.MenuItem1.Text = "导入配置文件";
@@ -387,16 +394,28 @@
             // MenuItemImportClient
             // 
             this.MenuItemImportClient.Name = "MenuItemImportClient";
-            this.MenuItemImportClient.Size = new System.Drawing.Size(154, 22);
+            this.MenuItemImportClient.Size = new System.Drawing.Size(160, 22);
             this.MenuItemImportClient.Text = "导入客户端配置";
             this.MenuItemImportClient.Click += new System.EventHandler(this.MenuItemImportClient_Click);
             // 
             // MenuItemImportServer
             // 
             this.MenuItemImportServer.Name = "MenuItemImportServer";
-            this.MenuItemImportServer.Size = new System.Drawing.Size(154, 22);
+            this.MenuItemImportServer.Size = new System.Drawing.Size(160, 22);
             this.MenuItemImportServer.Text = "导入服务端配置";
             this.MenuItemImportServer.Click += new System.EventHandler(this.MenuItemImportServer_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(157, 6);
+            // 
+            // MenuItemImportClipboard
+            // 
+            this.MenuItemImportClipboard.Name = "MenuItemImportClipboard";
+            this.MenuItemImportClipboard.Size = new System.Drawing.Size(160, 22);
+            this.MenuItemImportClipboard.Text = "从剪贴板导入URL";
+            this.MenuItemImportClipboard.Click += new System.EventHandler(this.MenuItemImportClipboard_Click);
             // 
             // panel1
             // 
@@ -405,6 +424,16 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(515, 10);
             this.panel1.TabIndex = 6;
+            // 
+            // btnGUID
+            // 
+            this.btnGUID.Location = new System.Drawing.Point(411, 83);
+            this.btnGUID.Name = "btnGUID";
+            this.btnGUID.Size = new System.Drawing.Size(75, 23);
+            this.btnGUID.TabIndex = 23;
+            this.btnGUID.Text = "生成(&G)";
+            this.btnGUID.UseVisualStyleBackColor = true;
+            this.btnGUID.Click += new System.EventHandler(this.btnGUID_Click);
             // 
             // AddServerForm
             // 
@@ -468,5 +497,8 @@
         private System.Windows.Forms.ToolStripMenuItem MenuItemImportServer;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.ComboBox cmbStreamSecurity;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem MenuItemImportClipboard;
+        private System.Windows.Forms.Button btnGUID;
     }
 }

@@ -170,7 +170,7 @@
             this.menuShareQRCode});
             this.cmsLv.Name = "cmsLv";
             this.cmsLv.OwnerItem = this.tsbServer;
-            this.cmsLv.Size = new System.Drawing.Size(227, 214);
+            this.cmsLv.Size = new System.Drawing.Size(227, 192);
             // 
             // menuAddServer
             // 

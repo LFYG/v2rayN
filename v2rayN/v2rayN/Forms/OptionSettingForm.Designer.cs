@@ -62,6 +62,7 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnOK = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.chkAutoSyncTime = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -109,6 +110,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.chkAutoSyncTime);
             this.groupBox1.Controls.Add(this.chkAutoRun);
             this.groupBox1.Controls.Add(this.chkmuxEnabled);
             this.groupBox1.Controls.Add(this.chkAllowIn2);
@@ -438,6 +440,16 @@
             this.panel1.Size = new System.Drawing.Size(528, 10);
             this.panel1.TabIndex = 9;
             // 
+            // chkAutoSyncTime
+            // 
+            this.chkAutoSyncTime.AutoSize = true;
+            this.chkAutoSyncTime.Location = new System.Drawing.Point(13, 229);
+            this.chkAutoSyncTime.Name = "chkAutoSyncTime";
+            this.chkAutoSyncTime.Size = new System.Drawing.Size(276, 16);
+            this.chkAutoSyncTime.TabIndex = 22;
+            this.chkAutoSyncTime.Text = "启动时自动从网络同步本地时间(可能会不成功)";
+            this.chkAutoSyncTime.UseVisualStyleBackColor = true;
+            // 
             // OptionSettingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -506,5 +518,6 @@
         private System.Windows.Forms.TabPage tabPage5;
         private System.Windows.Forms.TextBox txtUserdirect;
         private System.Windows.Forms.TextBox txtUserblock;
+        private System.Windows.Forms.CheckBox chkAutoSyncTime;
     }
 }

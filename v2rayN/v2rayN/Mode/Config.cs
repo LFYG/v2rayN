@@ -64,6 +64,11 @@ namespace v2rayN.Mode
         /// </summary>
         public List<string> userblock { get; set; }
 
+        /// <summary>
+        /// 自动从网络同步本地时间
+        /// </summary>
+        public bool autoSyncTime { get; set; }
+
         #region 函数
 
         public string address()

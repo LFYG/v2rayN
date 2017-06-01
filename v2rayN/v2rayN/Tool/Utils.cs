@@ -183,6 +183,24 @@ namespace v2rayN
             }
         }
 
+        /// <summary>
+        /// Base64解码
+        /// </summary>
+        /// <param name="plainText"></param>
+        /// <returns></returns>
+        public static string Base64Decode(string plainText)
+        {
+            try
+            {
+                byte[] data = Convert.FromBase64String(plainText);
+                return Encoding.UTF8.GetString(data);
+            }
+            catch
+            {
+                return string.Empty;
+            }
+        }
+
         #endregion
 
 
@@ -434,6 +452,45 @@ namespace v2rayN
             }
             return (T)retval;
         }
+
+        /// <summary>
+        /// 获取剪贴板数
+        /// </summary>
+        /// <returns></returns>
+        public static string GetClipboardData()
+        {
+            string strData = string.Empty;
+            try
+            {
+                IDataObject data = Clipboard.GetDataObject();
+                if (data.GetDataPresent(DataFormats.Text))
+                {
+                    strData = data.GetData(DataFormats.Text).ToString();
+                }
+                return strData;
+            }
+            catch
+            {
+            }
+            return strData;
+        }
+
+        /// <summary>
+        /// 取得GUID
+        /// </summary>
+        /// <returns></returns>
+        public static string GetGUID()
+        {
+            try
+            {
+                return Guid.NewGuid().ToString("D");
+            }
+            catch
+            {
+            }
+            return string.Empty;
+        }
+
         #endregion
     }
 }

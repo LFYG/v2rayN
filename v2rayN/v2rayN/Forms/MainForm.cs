@@ -37,6 +37,12 @@ namespace v2rayN.Forms
             RefreshServers();
 
             LoadV2ray();
+
+            //自动从网络同步本地时间
+            if (config.autoSyncTime)
+            {
+                CDateTime.SetLocalTime();
+            }
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -339,7 +345,7 @@ namespace v2rayN.Forms
                 UI.Show(string.Format("服务端配置文件保存在:{0}", fileName));
             }
         }
-        
+
         private void menuShareQRCode_Click(object sender, EventArgs e)
         {
             int index = GetLvSelectedIndex();

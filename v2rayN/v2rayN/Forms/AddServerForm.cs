@@ -67,6 +67,43 @@ namespace v2rayN.Forms
             cmbStreamSecurity.Text = "";
         }
 
+
+        private void cmbNetwork_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SetHeaderType();
+        }
+
+        /// <summary>
+        /// 设置伪装选项
+        /// </summary>
+        private void SetHeaderType()
+        {
+            cmbHeaderType.Items.Clear();
+
+            string network = cmbNetwork.Text;
+            if (Utils.IsNullOrEmpty(network))
+            {
+                cmbHeaderType.Items.Add(Global.None);
+                return;
+            }
+
+            cmbHeaderType.Items.Add(Global.None);
+            if (network.Equals(Global.DefaultNetwork))
+            {
+                cmbHeaderType.Items.Add(Global.TcpHeaderHttp);
+            }
+            else if (network.Equals("kcp"))
+            {
+                cmbHeaderType.Items.Add("srtp");
+                cmbHeaderType.Items.Add("utp");
+                cmbHeaderType.Items.Add("wechat-video");
+            }
+            else
+            {
+            }
+            cmbHeaderType.Text = Global.None;
+        }
+
         private void btnOK_Click(object sender, EventArgs e)
         {
             string address = txtAddress.Text;
@@ -123,6 +160,11 @@ namespace v2rayN.Forms
             {
                 UI.Show("操作失败，请检查重试");
             }
+        }
+
+        private void btnGUID_Click(object sender, EventArgs e)
+        {
+            txtId.Text = Utils.GetGUID();
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -196,6 +238,33 @@ namespace v2rayN.Forms
             cmbStreamSecurity.Text = vmessItem.streamSecurity;
         }
 
+        /// <summary>
+        /// 从剪贴板导入URL
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MenuItemImportClipboard_Click(object sender, EventArgs e)
+        {
+            ClearServer();
+
+            string msg;
+            VmessItem vmessItem = V2rayConfigHandler.ImportFromClipboardConfig(out msg);
+            if (vmessItem == null)
+            {
+                UI.Show(msg);
+                return;
+            }
+
+            txtAddress.Text = vmessItem.address;
+            txtPort.Text = vmessItem.port.ToString();
+            txtId.Text = vmessItem.id;
+            txtAlterId.Text = vmessItem.alterId.ToString();
+            txtRemarks.Text = vmessItem.remarks;
+            cmbNetwork.Text = vmessItem.network;
+            cmbHeaderType.Text = vmessItem.headerType;
+            txtRequestHost.Text = vmessItem.requestHost;
+            cmbStreamSecurity.Text = vmessItem.streamSecurity;
+        }
         #endregion
 
     }
